@@ -1,5 +1,6 @@
 package MODEL;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Plat implements IMenu {
@@ -10,7 +11,7 @@ public class Plat implements IMenu {
 
     private float Prix;
 
-    private Vector<Aliment> ListAliment;
+    private ArrayList<Aliment> ListAliment;
 
     //private String Provenance;
 
@@ -26,7 +27,7 @@ public class Plat implements IMenu {
     }
 
 
-    public Plat(int NumPlat, String Nom, float Prix, Aliment[] ListAliment)
+    public Plat(int NumPlat, String Nom, float Prix, ArrayList<Aliment> List)
     {
         setNumPlat(NumPlat);
 
@@ -34,7 +35,7 @@ public class Plat implements IMenu {
 
         setNom(Nom);
 
-        setListAliment(null);
+        setListAliment(List);
 
 
     }
@@ -64,7 +65,7 @@ public class Plat implements IMenu {
         return numPlat;
     }
 
-    public Vector<Aliment> getListAliment() {
+    public ArrayList<Aliment> getListAliment() {
         return ListAliment;
     }
 
@@ -80,7 +81,7 @@ public class Plat implements IMenu {
         this.numPlat = numPlat;
     }
 
-    public void setListAliment(Vector<Aliment> listAliment) {
+    public void setListAliment(ArrayList<Aliment> listAliment) {
         ListAliment = listAliment;
     }
 
@@ -88,7 +89,7 @@ public class Plat implements IMenu {
     {
         if(getListAliment() == null)
         {
-            Vector<Aliment> List = new Vector<Aliment>();
+            ArrayList<Aliment> List = new ArrayList<Aliment>();
 
             List.add(Ali);
 
@@ -97,6 +98,17 @@ public class Plat implements IMenu {
         else
             getListAliment().add(Ali);
     }
+
+    public void AjouterUnAlimentAuPlat(Aliment A)
+    {
+        getListAliment().add(A);
+    }
+
+    public void SupprimerUnAliment(Aliment A)
+    {
+        getListAliment().remove(A);
+    }
+
 
 
     @Override
@@ -107,5 +119,76 @@ public class Plat implements IMenu {
     @Override
     public void supprimerDuMenu(Menu M) {
         M.getListPlats().remove(this);
+    }
+
+
+    public boolean equals(Plat obj) {
+        if(getNom().equals(obj.getNom()) && getNumPlat() == obj.getNumPlat() && getPrix() == obj.getPrix())
+        {
+            boolean bool = false;
+            for(int i = 0; i < getListAliment().size() && !bool ; i++ )
+            {
+                if(! (getListAliment().get(i).equals(obj.getListAliment().get(i))) )
+                    bool = true;
+            }
+
+            if(!bool)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Plat{" +
+                "numPlat=" + numPlat +
+                ", Nom='" + Nom + '\'' +
+                ", Prix=" + Prix +
+                ", ListAliment=" + ListAliment +
+                '}';
+    }
+
+    public static void main(String[] args) {
+
+        //Test Constructor
+
+        Plat p1 = new Plat();
+
+        Plat p2 = new Plat(1, "Pates Bolo", 15.5F, new ArrayList<Aliment>());
+
+        Plat p3 = new Plat(p2);
+
+        System.out.println(p1.toString());
+
+        System.out.println(p2.toString());
+
+        System.out.println(p3.toString());
+
+
+        //Test ajout des Aliment
+
+        Aliment a1 = new Aliment(1, "Carrote");
+
+        Aliment a2 = new Aliment(2, "Pate");
+
+        Aliment a3 = new Aliment(3, "Ognons");
+
+        Aliment a4 = new Aliment(4, "Tomate");
+
+        p3.AjouterUnAlimentAuPlat(a1);
+        p3.AjouterUnAlimentAuPlat(a2);
+        p3.AjouterUnAlimentAuPlat(a3);
+        p3.AjouterUnAlimentAuPlat(a4);
+
+        System.out.println(p3.toString());
+
+        p3.SupprimerUnAliment(a3);
+
+        System.out.println(p3.toString());
+
+
     }
 }

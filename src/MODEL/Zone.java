@@ -1,4 +1,8 @@
 package MODEL;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Zone {
 
     private int NumZone;
@@ -7,7 +11,7 @@ public class Zone {
 
     private int nbTable;
 
-    private Table[] VecTable;
+    private ArrayList<Table> VecTable;
 
 
 
@@ -22,7 +26,7 @@ public class Zone {
         setVecTable(null);
     }
 
-    public Zone(int NumZone, int Taille, int nbTable){
+    public Zone(int NumZone, int Taille, int nbTable, ArrayList<Table> ListTable){
 
         setNumZone(NumZone);
 
@@ -30,7 +34,7 @@ public class Zone {
 
         setTaille(Taille);
 
-        setVecTable(null);
+        setVecTable(ListTable);
     }
 
     public Zone(Zone Z){
@@ -56,7 +60,7 @@ public class Zone {
         return NumZone;
     }
 
-    public Table[] getVecTable() {
+    public ArrayList<Table> getVecTable() {
         return VecTable;
     }
 
@@ -72,7 +76,70 @@ public class Zone {
         NumZone = numZone;
     }
 
-    public void setVecTable(Table[] vecTable) {
+    public void setVecTable(ArrayList<Table> vecTable) {
         VecTable = vecTable;
+    }
+
+    public void AjouterUneTableAUneZone(Table t1)
+    {
+        getVecTable().add(t1);
+    }
+
+    public void SupprimerUneTableAUneZone(Table t1)
+    {
+        getVecTable().remove(t1);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Zone{" +
+                "NumZone=" + NumZone +
+                ", Taille=" + Taille +
+                ", nbTable=" + nbTable +
+                ", VecTable=" + VecTable +
+                '}';
+    }
+
+    public boolean equals(Zone obj) {
+        if(getNumZone() == obj.getNumZone() && getTaille() == obj.getTaille() && getNbTable() == obj.getNbTable())
+            return true;
+        else
+            return false;
+    }
+
+    public static void main(String[] args) {
+
+        //Test Constructor
+
+        Zone z1 = new Zone();
+
+        Zone z2 = new Zone(1, 50, 5, new ArrayList<Table>());
+
+        Zone z3 = new Zone(z2);
+
+        System.out.println(z1.toString());
+
+        System.out.println(z2.toString());
+
+        System.out.println(z3.toString());
+
+
+        //test des Ajout et suppression
+
+        Table t2 = new Table(1, 5);
+        Table t3 = new Table(2, 5);
+        Table t4 = new Table(3, 5);
+
+        z3.AjouterUneTableAUneZone(t2);
+        z3.AjouterUneTableAUneZone(t3);
+        z3.AjouterUneTableAUneZone(t4);
+
+        System.out.println(z3.toString());
+
+        z3.SupprimerUneTableAUneZone(t2);
+
+        System.out.println(z3.toString());
+
     }
 }

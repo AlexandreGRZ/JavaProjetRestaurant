@@ -41,4 +41,36 @@ public class Table {
     public void setNumTable(int numTable) {
         this.numTable = numTable;
     }
+
+    public boolean equals(Table obj) {
+       if (getNbPersonne() == obj.getNbPersonne() && getNumTable() == obj.getNumTable())
+           return true;
+       else
+           return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Table{" +
+                "numTable=" + numTable +
+                ", nbPersonne=" + nbPersonne +
+                '}';
+    }
+
+    public static void main(String[] args) {
+
+        //Test Constructor
+        Table t1 = new Table();
+
+        Table t2 = new Table(1, 5);
+
+        Table t3 = new Table(t2);
+
+        System.out.println(t1.toString());
+
+        System.out.println(t2.toString());
+
+        System.out.println(t3.toString());
+
+    }
 }

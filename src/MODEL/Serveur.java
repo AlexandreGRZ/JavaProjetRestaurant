@@ -93,4 +93,42 @@ public class Serveur extends Personne implements Affectation {
     public void RetirerDeLaZone() {
         setZoneDeService(null);
     }
+
+    public boolean equals(Serveur obj) {
+        if(getNom().equals(obj.getNom()) && getPrenom().equals(obj.getPrenom())
+                && getLogin().equals(obj.getLogin()) && getBirthDay().equals(obj.getBirthDay())
+                && getMotsDePasse().equals(obj.getMotsDePasse()) && getChef().equals(obj.getChef())
+                && getZoneDeService().equals(obj.getZoneDeService()) && getGrade().equals(obj.getGrade()))
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Serveur{" +
+                "NumServeur=" + NumServeur +
+                ", Grade='" + Grade + '\'' +
+                ", chef=" + chef +
+                ", ZoneDeService=" + ZoneDeService +
+                '}';
+    }
+
+    public static void main(String[] args) {
+
+        //Test Constructor
+
+        Serveur s1 = new Serveur();
+
+        Serveur s2 = new Serveur(1, "COMI", new MaitreHotel(), new Zone(), "GRZEGORCZYK" ,"ALEXANDRE", "Papyrusse", "123456789", 30, 03, 2003 );
+
+        Serveur s3 = new Serveur(s2);
+
+        System.out.println(s1.toString());
+
+        System.out.println(s2.toString());
+
+        System.out.println(s3.toString());
+
+    }
 }

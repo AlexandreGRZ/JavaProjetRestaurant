@@ -1,7 +1,7 @@
 package MODEL;
 import java.util.Date;
 
-public class Personne {
+public abstract class Personne {
 
     private String Nom;
     private String Prenom;
@@ -33,7 +33,7 @@ public class Personne {
 
         setPrenom(prenom);
 
-        Date d = new Date(year - 1900, month, day);
+        Date d = new Date(year - 1900, month - 1, day);
 
         setBirthDay(d);
 
@@ -95,8 +95,26 @@ public class Personne {
         MotsDePasse = motsDePasse;
     }
 
-    public String toString(){
-        return "Nom " + getNom() + "Prenom " + getPrenom() + "Date " + getBirthDay().toString() + "\n";
+    public boolean equals(Personne obj) {
+        if(getNom().equals(obj.getNom()) && getPrenom().equals(obj.getPrenom())
+                && getBirthDay().equals(obj.getBirthDay())
+                && getMotsDePasse().equals(obj.getMotsDePasse()))
+            return true;
+        else
+            return false;
     }
 
+    @Override
+    public String toString() {
+        return "Personne{" +
+                "Nom='" + Nom + '\'' +
+                ", Prenom='" + Prenom + '\'' +
+                ", BirthDay=" + BirthDay +
+                ", Login='" + Login + '\'' +
+                ", MotsDePasse='" + MotsDePasse + '\'' +
+                '}';
+    }
+
+    //comme la classe est abstraire elle ne sera jamais instancier et ses constructeurs sont utiliser dans
+    // les autres personnes et fonctionne bien
 }

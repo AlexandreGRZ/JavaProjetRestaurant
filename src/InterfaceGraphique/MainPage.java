@@ -1,26 +1,22 @@
 package InterfaceGraphique;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
-import org.jdatepicker.impl.*;
-
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.Properties;
 
 public class MainPage extends JFrame  {
     private JPanel panel1;
     private JPanel PanelHeader;
     private JPanel PanelMenuPlat;
-    private JButton AJOUTERAUMENUButton1;
-    private JButton AJOUTERAUPLATButton;
     private JTable table3;
+    private JButton ajouterUnReservationButton;
     private JTable table1;
     private JTable table2;
-    private JPanel datepannelMainPage;
+    private JButton DECONNEXIONButton;
+    private JButton AJOUTERButton;
+    private JButton SUPPRIMERButton;
+    private JButton AJOUTERButton1;
+    private JButton SUPPRIMERButton1;
+    private JButton SUPPRIMERButton2;
 
 
     private void createUIComponents() {
