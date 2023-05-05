@@ -123,12 +123,12 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="ae4e7" class="javax.swing.JButton" binding="AJOUTERButton1" default-binding="true">
+              <component id="ae4e7" class="javax.swing.JButton" binding="CREEPLATButton" default-binding="true">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="AJOUTER"/>
+                  <text value="CREE PLAT"/>
                 </properties>
               </component>
               <component id="98fdd" class="javax.swing.JButton" binding="SUPPRIMERButton1" default-binding="true">
@@ -149,12 +149,12 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="cc429" class="javax.swing.JButton" binding="AJOUTERButton" default-binding="true">
+              <component id="cc429" class="javax.swing.JButton" binding="AJOUTERPLATButton" default-binding="true">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="AJOUTER"/>
+                  <text value="AJOUTER PLAT"/>
                 </properties>
               </component>
               <component id="bf887" class="javax.swing.JButton" binding="SUPPRIMERButton" default-binding="true">

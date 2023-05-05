@@ -1,5 +1,7 @@
 package InterfaceGraphique;
 
+import Controlleur.Controlleur;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,9 +14,9 @@ public class MainPage extends JFrame  {
     private JTable table1;
     private JTable table2;
     private JButton DECONNEXIONButton;
-    private JButton AJOUTERButton;
+    private JButton AJOUTERPLATButton;
     private JButton SUPPRIMERButton;
-    private JButton AJOUTERButton1;
+    private JButton CREEPLATButton;
     private JButton SUPPRIMERButton1;
     private JButton SUPPRIMERButton2;
 
@@ -43,6 +45,16 @@ public class MainPage extends JFrame  {
         Init.setSize(new Dimension(1080, 720));
 
         Init.setVisible(true);
+    }
+
+    public void setControlleur(Controlleur C)
+    {
+        DECONNEXIONButton.addActionListener(C);
+        AJOUTERPLATButton.addActionListener(C);
+        CREEPLATButton.addActionListener(C);
+        ajouterUnReservationButton.addActionListener(C);
+
+        this.addWindowListener(C);
     }
 
 
