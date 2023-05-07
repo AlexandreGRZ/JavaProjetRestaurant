@@ -2,19 +2,28 @@ package MODEL;
 
 
 import java.util.ArrayList;
+import java.io.*;
+import java.util.List;
+
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+
+import org.apache.commons.lang3.*;
+
 
 public class Restaurant {
 
 
     ArrayList<Resevation> ListReservation;
     Menu Menu = new Menu(1, new ArrayList<Plat>(), new ArrayList<Boisson>());
-    ArrayList<Plat> ListDePlat;
-    ArrayList<Aliment> ListAliment; // a charger depuis un fichier
-    ArrayList<Boisson> ListBoisson; // a charger depuis un fichier
-    ArrayList<Client> ListClient;
-    ArrayList<Serveur> ListServeur;
-    ArrayList<MaitreHotel>ListMaitreHotel;
-    ArrayList<Salle> ListSalle; // a charger depuis un fichier
+    ArrayList<Plat> ListDePlat = new ArrayList<Plat>();
+    ArrayList<Aliment> ListAliment = new ArrayList<Aliment>(); // a charger depuis un fichier
+    ArrayList<Aliment> ListAlimentAfficher = new ArrayList<Aliment>();
+    ArrayList<Boisson> ListBoisson = new ArrayList<Boisson>(); // a charger depuis un fichier
+    ArrayList<Client> ListClient = new ArrayList<Client>();
+    ArrayList<Serveur> ListServeur = new ArrayList<Serveur>();
+    ArrayList<MaitreHotel>ListMaitreHotel = new ArrayList<MaitreHotel>();
+    ArrayList<Salle> ListSalle = new ArrayList<Salle>(); // a charger depuis un fichier
 
     private static Restaurant r1;
 
@@ -100,6 +109,10 @@ public class Restaurant {
         return ListReservation;
     }
 
+    public ArrayList<Aliment> getListAlimentAfficher() {
+        return ListAlimentAfficher;
+    }
+
     public ArrayList<Salle> getListSalle() {
         return ListSalle;
     }
@@ -111,5 +124,61 @@ public class Restaurant {
     public Personne getPersonneConnecte() {
         return PersonneConnecte;
     }
+
+
+    //METHOD------------------------------------------------------------------------------------------------------------------
+
+    public void LoadAliment()
+    {
+        try(CSVReader reader = new CSVReader(new FileReader("E:\\Cours\\Java\\JavaProjetRestaurant\\CSV\\Aliment.csv")))
+        {
+            reader.readNext();
+
+            List<String[]> lignes = reader.readAll();
+            for(String[] ligne : lignes)
+            {
+                int num = Integer.parseInt(ligne[0]);
+                String NomAliment = ligne[1];
+                ListAliment.add(new Aliment(num, NomAliment));
+            }
+        }
+        catch (IOException | CsvException e)
+        {
+            System.out.println("Probleme avec le fichier csv");
+        }
+    }
+
+    public void AddAlimentToPlat(String NomAliment)
+    {
+        for (Aliment Value: ListAliment) {
+            if(Value.getNom() == NomAliment)
+            {
+                ListAlimentAfficher.add(Value);
+                break;
+            }
+
+        }
+    }
+
+    public void Save(Object data)
+    {
+        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
+        {
+            objectOutputStream.writeObject(data);
+        }catch (IOException e) {
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+        }
+
+    }
+
+    public Plat SearchPlat(int indice)
+    {
+        return getListDePlat().get(indice);
+    }
+
+
+
+
 
 }

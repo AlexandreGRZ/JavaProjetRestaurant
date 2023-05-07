@@ -1,15 +1,16 @@
 package Controlleur;
 
-import InterfaceGraphique.AjouterAuMenuInterface;
-import InterfaceGraphique.CreeUnPlat;
-import InterfaceGraphique.MainPage;
-import InterfaceGraphique.ReservationMainView;
+import InterfaceGraphique.*;
+import MODEL.Aliment;
+import MODEL.Plat;
 import MODEL.Restaurant;
 
+import javax.print.DocFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 
 public class Controlleur implements ActionListener, WindowListener {
 
@@ -17,6 +18,23 @@ public class Controlleur implements ActionListener, WindowListener {
     private Restaurant restaurant;
 
     private MainPage mainvue;
+
+    private ReservationMainView ReservationMainVue;
+
+    private InterfaceUtilisateur ConnexionWindow;
+
+    private InscriptionGraphique InscriptionWindow;
+
+    private CreeUnPlat CreePlatWindow;
+
+    private AjouterAuMenuInterface AddMenuWindow;
+
+    public Controlleur (Restaurant r, InterfaceUtilisateur m)
+    {
+        restaurant = r;
+
+        ConnexionWindow = m;
+    }
 
     public Controlleur (Restaurant r, MainPage m)
     {
@@ -35,23 +53,106 @@ public class Controlleur implements ActionListener, WindowListener {
 
             if(e.getActionCommand().equals("AJOUTER PLAT"))
             {
-                AjouterAuMenuInterface w = new AjouterAuMenuInterface("Test");
-                w.setControlleur(this);
-                w.setVisible(true);
+                AddMenuWindow = new AjouterAuMenuInterface("Test",restaurant.getListDePlat());
+                AddMenuWindow.setControlleur(this);
+                AddMenuWindow.setNewModel();
+                AddMenuWindow.setVisible(true);
             }
 
             if(e.getActionCommand().equals("CREE PLAT"))
             {
-                CreeUnPlat w = new CreeUnPlat("test");
-                w.setVisible(true);
+                CreePlatWindow = new CreeUnPlat("test", restaurant.getListAliment());
+                CreePlatWindow.setControlleur(this);
+                CreePlatWindow.setVisible(true);
             }
 
             if(e.getActionCommand().equals("Ajouter Un Reservation"))
             {
-                ReservationMainView w = new ReservationMainView("test");
-                w.setVisible(true);
+                ReservationMainVue = new ReservationMainView("test");
+                ReservationMainVue.setControlleur(this);
+                ReservationMainVue.setVisible(true);
+
+            }
+            if(e.getActionCommand().equals("RESERVER"))
+            {
+                ReservationMainVue.dispose();
             }
 
+            if(e.getActionCommand().equals("Deja Connecté"))
+            {
+                ConnexionWindow.dispose();
+                InscriptionWindow = new InscriptionGraphique("test");
+                InscriptionWindow.setVisible(true);
+                InscriptionWindow.setControlleur(this);
+            }
+
+            if(e.getActionCommand().equals("CONNEXION"))
+            {
+                ConnexionWindow.dispose();
+            }
+
+            if(e.getActionCommand().equals("INSCRIPTION"))
+            {
+                InscriptionWindow.dispose();
+            }
+
+            if(e.getActionCommand().equals("Déja Inscrit"))
+            {
+                InscriptionWindow.dispose();
+                ConnexionWindow = new InterfaceUtilisateur("test");
+                ConnexionWindow.setControlleur(this);
+                ConnexionWindow.setVisible(true);
+            }
+
+            if(e.getActionCommand().equals("AJOUTER ALIMENT"))
+            {
+                String AlimentSelected = (String) CreePlatWindow.getCBAliment().getSelectedItem();
+
+                restaurant.AddAlimentToPlat(AlimentSelected);
+
+                CreePlatWindow.setListAlimentSelected(restaurant.getListAlimentAfficher());
+                CreePlatWindow.setNewModel();
+            }
+            if(e.getActionCommand().equals("CREER LE PLAT"))
+            {
+                CreePlatWindow.dispose();
+                Plat p = new Plat(restaurant.getListDePlat().size(),CreePlatWindow.getTFNomPlat().getText(),
+                        Float.parseFloat(CreePlatWindow.getTFPrix().getText()), Restaurant.getInstance().getListAlimentAfficher());
+
+                restaurant.getListDePlat().add(p);
+                restaurant.getListAlimentAfficher().clear();
+                mainvue.setNewModelPlat();
+            }
+
+            if(e.getActionCommand().equals("AJOUTER AU MENU"))
+            {
+                restaurant.getMenu().getListPlats().add(restaurant.SearchPlat(AddMenuWindow.getJTPlat().getSelectedRow()));
+                AddMenuWindow.dispose();
+                mainvue.setNewModelMenu();
+            }
+
+            if(e.getActionCommand().equals("CREER UN PLAT"))
+            {
+                AddMenuWindow.dispose();
+                CreePlatWindow = new CreeUnPlat("test", restaurant.getListAliment());
+                CreePlatWindow.setControlleur(this);
+                CreePlatWindow.setVisible(true);
+            }
+
+            if(e.getActionCommand().equals("SUPPRIMER DU MENU"))
+            {
+
+            }
+
+            if(e.getActionCommand().equals("SUPPRIMER UN PLAT"))
+            {
+
+            }
+
+            if(e.getActionCommand().equals("SUPPRIMER"))
+            {
+
+            }
 
     }
 
@@ -62,6 +163,8 @@ public class Controlleur implements ActionListener, WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
+
+        //  restaurant.Save(restaurant.getListDePlat());
 
         e.getWindow().setVisible(false);
     }

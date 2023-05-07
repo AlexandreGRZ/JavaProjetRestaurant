@@ -1,18 +1,20 @@
 package InterfaceGraphique;
 
+import Controlleur.Controlleur;
+
 import javax.swing.*;
-import java.awt.*;
 
 public class ReservationMainView extends JFrame {
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JButton RESERVATIONButton;
-    private JTextField textField5;
-    private JTextField textField6;
-    private JTextField textField7;
+    private JTextField TFNbPersonne;
+    private JTextField TFJour;
+    private JTextField TFMois;
+    private JTextField TFAnnee;
+    private JButton RESERVERBTN;
+    private JTextField TFNomPersonne;
+    private JTextField TFHeure;
+    private JTextField TFMin;
     private JPanel panel1;
+    private JButton RESERVERButton;
 
 
     private void createUIComponents() {
@@ -25,19 +27,36 @@ public class ReservationMainView extends JFrame {
 
         super(Nom);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.setContentPane(panel1);
 
         this.pack();
     }
 
-    public static void main(String[] args) {
+    public void setControlleur(Controlleur C)
+    {
+        RESERVERButton.addActionListener(C);
+        this.addWindowListener(C);
+    }
 
-        JFrame Init = new ReservationMainView("MainPage");
+    public JTextField getTFAnnee() {
+        return TFAnnee;
+    }
 
-        Init.setSize(new Dimension(450, 250));
+    public JTextField getTFJour() {
+        return TFJour;
+    }
 
-        Init.setVisible(true);
+    public JTextField getTFMois() {
+        return TFMois;
+    }
+
+    public JTextField getTFHeure() {
+        return TFHeure;
+    }
+
+    public JTextField getTFMin() {
+        return TFMin;
     }
 }

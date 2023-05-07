@@ -69,12 +69,12 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="bc366" class="javax.swing.JButton" binding="AJOUTERButton" default-binding="true">
+              <component id="bc366" class="javax.swing.JButton" binding="AJOUTERAUMENUButton" default-binding="true">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="AJOUTER"/>
+                  <text value="AJOUTER AU MENU"/>
                 </properties>
               </component>
               <scrollpane id="f437">
@@ -84,7 +84,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="8b318" class="javax.swing.JTable" binding="table1" default-binding="true">
+                  <component id="8b318" class="javax.swing.JTable" binding="JTPlat">
                     <constraints/>
                     <properties/>
                   </component>
@@ -92,12 +92,12 @@
               </scrollpane>
             </children>
           </grid>
-          <component id="2531b" class="javax.swing.JButton" binding="AJOUTERUNPLATButton" default-binding="true">
+          <component id="2531b" class="javax.swing.JButton" binding="CREERUNPLATButton" default-binding="true">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="1" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="AJOUTER UN PLAT "/>
+              <text value="CREER UN PLAT"/>
             </properties>
           </component>
         </children>

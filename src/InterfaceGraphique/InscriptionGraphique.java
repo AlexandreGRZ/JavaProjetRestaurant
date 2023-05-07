@@ -1,5 +1,7 @@
 package InterfaceGraphique;
 
+import Controlleur.Controlleur;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,7 +20,7 @@ public class InscriptionGraphique extends JFrame {
 
         super(Nom);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.setContentPane(MainPanel);
 
@@ -36,5 +38,12 @@ public class InscriptionGraphique extends JFrame {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+    public void setControlleur(Controlleur C)
+    {
+        INSCRIPTIONButton.addActionListener(C);
+        déjaInscritButton.addActionListener(C);
+        this.addWindowListener(C);
     }
 }

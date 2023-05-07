@@ -7,15 +7,7 @@ public class Resevation {
 
     private Client Clients;
 
-    private int Jour;
-
-    private int Mois;
-
-    private int Annee;
-
-    private int Heure;
-
-    private int Min;
+    private Date datereservation;
 
     public Resevation()
     {
@@ -25,19 +17,11 @@ public class Resevation {
 
         setClients(new Client());
 
-        setJour(1);
-
-        setMois(1);
-
-        setAnnee(1900);
-
-        setHeure(12);
-
-        setMin(0);
+        setDatereservation(new Date());
 
     }
 
-    public Resevation(int numreservation, int nbPersonne, Client client, int jour, int mois, int annee, int heure, int min)
+    public Resevation(int numreservation, int nbPersonne, Client client, Date datereservation)
     {
         setNumReservation(numreservation);
 
@@ -45,15 +29,7 @@ public class Resevation {
 
         setClients(client);
 
-        setJour(jour);
-
-        setMois(mois);
-
-        setAnnee(annee);
-
-        setHeure(heure);
-
-        setMin(min);
+        setDatereservation(datereservation);
     }
 
     public Resevation( Resevation R)
@@ -64,15 +40,7 @@ public class Resevation {
 
         setClients(R.getClients());
 
-        setJour(R.getJour());
-
-        setMois(R.getMois());
-
-       setAnnee(R.getAnnee());
-
-        setHeure(R.getHeure());
-
-        setMin(R.getMin());
+        setDatereservation(R.getDatereservation());
     }
 
     public int getNumReservation() {
@@ -87,26 +55,9 @@ public class Resevation {
         return Clients;
     }
 
-    public int getJour() {
-        return Jour;
+    public Date getDatereservation() {
+        return datereservation;
     }
-
-    public int getMois() {
-        return Mois;
-    }
-
-    public int getAnnee() {
-        return Annee;
-    }
-
-    public int getHeure() {
-        return Heure;
-    }
-
-    public int getMin() {
-        return Min;
-    }
-
 
     public void setNumReservation(int numReservation) {
         this.numReservation = numReservation;
@@ -120,31 +71,13 @@ public class Resevation {
         Clients = clients;
     }
 
-    public void setJour(int jour) {
-        Jour = jour;
+    public void setDatereservation(Date datereservation) {
+        this.datereservation = datereservation;
     }
-
-    public void setMois(int mois) {
-        Mois = mois;
-    }
-
-    public void setAnnee(int annee) {
-        Annee = annee;
-    }
-
-    public void setHeure(int heure) {
-        Heure = heure;
-    }
-
-    public void setMin(int min) {
-        Min = min;
-    }
-
 
     public boolean equals(Resevation obj) {
        if(getNumReservation() == obj.getNumReservation() && getNbPersonne() == obj.getNumReservation()
-               && getClients().equals(obj.getClients()) && getJour() == obj.getJour() && getMois() == obj.getMois()
-               && getAnnee() == obj.getAnnee() && getHeure() == obj.getHeure() && getMin() == obj.getMin())
+               && getClients().equals(obj.getClients()))
            return true;
        else return false;
     }
@@ -155,11 +88,6 @@ public class Resevation {
                 "numReservation=" + numReservation +
                 ", nbPersonne=" + nbPersonne +
                 ", Clients=" + Clients +
-                ", Jour=" + Jour +
-                ", Mois=" + Mois +
-                ", Annee=" + Annee +
-                ", Heure=" + Heure +
-                ", Min=" + Min +
                 '}';
     }
 
@@ -167,7 +95,7 @@ public class Resevation {
 
        Resevation r1 = new Resevation();
 
-       Resevation r2 = new Resevation(1, 5, new Client(), 3, 3 , 2003, 12, 40);
+       Resevation r2 = new Resevation(1, 5, new Client(),new Date(3, 3 , 2003, 12, 40));
 
        Resevation r3 = new Resevation(r2);
 

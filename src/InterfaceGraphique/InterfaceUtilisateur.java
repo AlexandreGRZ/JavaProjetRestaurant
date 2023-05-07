@@ -1,5 +1,7 @@
 package InterfaceGraphique;
 
+import Controlleur.Controlleur;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,6 +10,7 @@ public class InterfaceUtilisateur extends JFrame {
     private JTextField textField1;
     private JTextField textField2;
     private JButton CONNEXIONButton;
+    private JButton dejaConnectéButton;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -17,7 +20,7 @@ public class InterfaceUtilisateur extends JFrame {
     public InterfaceUtilisateur(String Nom) {
         super(Nom);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.setContentPane(panel1);
 
@@ -30,6 +33,14 @@ public class InterfaceUtilisateur extends JFrame {
         Init.setSize(new Dimension(450, 250));
 
         Init.setVisible(true);
+    }
+
+    public void setControlleur(Controlleur C)
+    {
+        dejaConnectéButton.addActionListener(C);
+        CONNEXIONButton.addActionListener(C);
+
+        this.addWindowListener(C);
     }
 
 }

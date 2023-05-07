@@ -1,32 +1,78 @@
 package InterfaceGraphique;
 
+import Controlleur.Controlleur;
+import InterfaceGraphique.JTableModel.AlimentJtableModel;
+import MODEL.Aliment;
+
 import javax.swing.*;
-import java.awt.*;
+import java.util.ArrayList;
 
 public class CreeUnPlat extends JFrame{
     private JPanel panel1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JComboBox comboBox1;
-    private JButton AJOUTERButton;
-    private JButton AJOUTERButton1;
-    private JTable table1;
+    private JTextField TFNomPlat;
+    private JTextField TFPrix;
+    private JComboBox CBAliment;
+    private JButton AJOUTERALIMENTButton;
+    private JButton CREERLEPLATButton;
+    private JPanel AlimentPanel;
+    private JTable AlimentTable;
+    private ArrayList<Aliment> data;
 
-    public CreeUnPlat(String Nom) {
+    private ArrayList<Aliment> ListAlimentSelected = new ArrayList<Aliment>();
+
+    public CreeUnPlat(String Nom, ArrayList<Aliment> data) {
+
         super(Nom);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.data = data;
+
+        //Ajout du model dans la jTable
+
+        setNewModel();
+
+        //Ajout des élément dans le Combobox
+        AddelementToCombox();
+
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.setContentPane(panel1);
 
         this.pack();
     }
 
-    public static void main(String[] args) {
-        JFrame Init = new CreeUnPlat("MainPage");
+    public void setControlleur(Controlleur C)
+    {
+       AJOUTERALIMENTButton.addActionListener(C);
+       CREERLEPLATButton.addActionListener(C);
+       this.addWindowListener(C);
+    }
 
-        Init.setSize(new Dimension(400, 300));
+    public JComboBox getCBAliment() {
+        return CBAliment;
+    }
 
-        Init.setVisible(true);
+    public JTextField getTFNomPlat() {
+        return TFNomPlat;
+    }
+
+    public JTextField getTFPrix() {
+        return TFPrix;
+    }
+
+    public void AddelementToCombox()
+    {
+        for (Aliment value: data) {
+            CBAliment.addItem(value.getNom());
+        }
+    }
+
+    public void setListAlimentSelected(ArrayList<Aliment> listAlimentSelected) {
+        ListAlimentSelected = listAlimentSelected;
+    }
+
+    public void setNewModel()
+    {
+        AlimentJtableModel model = new AlimentJtableModel(ListAlimentSelected);
+        AlimentTable.setModel(model);
     }
 }
