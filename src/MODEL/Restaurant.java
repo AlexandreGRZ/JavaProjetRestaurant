@@ -1,9 +1,8 @@
 package MODEL;
 
 
-import java.util.ArrayList;
+import java.util.*;
 import java.io.*;
-import java.util.List;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -14,7 +13,7 @@ import org.apache.commons.lang3.*;
 public class Restaurant {
 
 
-    ArrayList<Resevation> ListReservation;
+    ArrayList<Resevation> ListReservation = new ArrayList<Resevation>();
     Menu Menu = new Menu(1, new ArrayList<Plat>(), new ArrayList<Boisson>());
     ArrayList<Plat> ListDePlat = new ArrayList<Plat>();
     ArrayList<Aliment> ListAliment = new ArrayList<Aliment>(); // a charger depuis un fichier
@@ -24,6 +23,8 @@ public class Restaurant {
     ArrayList<Serveur> ListServeur = new ArrayList<Serveur>();
     ArrayList<MaitreHotel>ListMaitreHotel = new ArrayList<MaitreHotel>();
     ArrayList<Salle> ListSalle = new ArrayList<Salle>(); // a charger depuis un fichier
+
+    Map<Date, ArrayList<Table>> MapReservation = new HashMap<>();
 
     private static Restaurant r1;
 
@@ -121,6 +122,58 @@ public class Restaurant {
         return Menu;
     }
 
+    public Map<Date, ArrayList<Table>> getMapReservation() {
+        return MapReservation;
+    }
+
+    public void setListDePlat(ArrayList<Plat> listDePlat) {
+            ListDePlat = listDePlat;
+    }
+
+    public void setListAliment(ArrayList<Aliment> listAliment) {
+        ListAliment = listAliment;
+    }
+
+    public void setListAlimentAfficher(ArrayList<Aliment> listAlimentAfficher) {
+        ListAlimentAfficher = listAlimentAfficher;
+    }
+
+    public void setListBoisson(ArrayList<Boisson> listBoisson) {
+        ListBoisson = listBoisson;
+    }
+
+    public void setListClient(ArrayList<Client> listClient) {
+        ListClient = listClient;
+    }
+
+    public void setListMaitreHotel(ArrayList<MaitreHotel> listMaitreHotel) {
+        ListMaitreHotel = listMaitreHotel;
+    }
+
+    public void setListReservation(ArrayList<Resevation> listReservation) {
+        ListReservation = listReservation;
+    }
+
+    public void setListSalle(ArrayList<Salle> listSalle) {
+        ListSalle = listSalle;
+    }
+
+    public void setListServeur(ArrayList<Serveur> listServeur) {
+        ListServeur = listServeur;
+    }
+
+    public void setMenu(MODEL.Menu menu) {
+        Menu = menu;
+    }
+
+    public void setPersonneConnecte(Personne personneConnecte) {
+        PersonneConnecte = personneConnecte;
+    }
+
+    public void setMapReservation(Map<Date, ArrayList<Table>> mapReservation) {
+        MapReservation = mapReservation;
+    }
+
     public Personne getPersonneConnecte() {
         return PersonneConnecte;
     }
@@ -130,7 +183,7 @@ public class Restaurant {
 
     public void LoadAliment()
     {
-        try(CSVReader reader = new CSVReader(new FileReader("E:\\Cours\\Java\\JavaProjetRestaurant\\CSV\\Aliment.csv")))
+        try(CSVReader reader = new CSVReader(new FileReader("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/CSV/Aliment.csv")))
         {
             reader.readNext();
 
@@ -151,7 +204,7 @@ public class Restaurant {
     public void AddAlimentToPlat(String NomAliment)
     {
         for (Aliment Value: ListAliment) {
-            if(Value.getNom() == NomAliment)
+            if(Value.getNom().equals(NomAliment))
             {
                 ListAlimentAfficher.add(Value);
                 break;
@@ -160,16 +213,119 @@ public class Restaurant {
         }
     }
 
-    public void Save(Object data)
+    public void SavePlat(ArrayList<Plat> data)
     {
-        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data");
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Plat");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
-            objectOutputStream.writeObject(data);
+            for (Plat p: data) {
+                objectOutputStream.writeObject(p);
+            }
         }catch (IOException e) {
             System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
         }
 
+    }
+
+    public void SaveMenu(Menu menu)
+    {
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Menu");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
+        {
+            objectOutputStream.writeObject(menu);
+        }catch (IOException e) {
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+        }
+
+    }
+
+    public void SaveClient(ArrayList<Client> data)
+    {
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Client");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
+        {
+            for (Client value: data) {
+                System.out.println(value.toString());
+                objectOutputStream.writeObject(value);
+            }
+        }catch (IOException e) {
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+        }
+
+    }
+
+    public void SaveMapReservation(Menu menu)
+    {
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/MapReservation");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
+        {
+            objectOutputStream.writeObject(MapReservation);
+        }catch (IOException e) {
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+        }
+
+    }
+    public void LoadPlat()
+    {
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Plat");
+            ObjectInputStream objectInputStream = new ObjectInputStream(reader))
+        {
+            Plat p = (Plat) objectInputStream.readObject();
+            while (p != null)
+            {
+                getListDePlat().add(p);
+                p = (Plat) objectInputStream.readObject();
+            }
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+        }
+    }
+
+    public void LoadMapReservation()
+    {
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/MapReservation");
+            ObjectInputStream objectInputStream = new ObjectInputStream(reader))
+        {
+           setMapReservation( (Map<Date, ArrayList<Table>>) objectInputStream.readObject());
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+        }
+    }
+    public void LoadClient()
+    {
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Client");
+            ObjectInputStream objectInputStream = new ObjectInputStream(reader))
+        {
+            Client c = (Client) objectInputStream.readObject();
+            while (c != null)
+            {
+                System.out.println(c.toString());
+                getListClient().add(c);
+                c = (Client) objectInputStream.readObject();
+            }
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+        }
+    }
+
+    public void LoadMenu()
+    {
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Menu");
+            ObjectInputStream objectInputStream = new ObjectInputStream(reader))
+        {
+            Menu m = (Menu) objectInputStream.readObject();
+            setMenu(m);
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+        }
     }
 
     public Plat SearchPlat(int indice)
@@ -177,8 +333,189 @@ public class Restaurant {
         return getListDePlat().get(indice);
     }
 
+    public Client SearchClient(String nom)
+    {
+        for(int i = 0; i < getListClient().size(); i++)
+        {
+            if(getListClient().get(i).getNom().equals(nom))
+                return getListClient().get(i);
+        }
+        return null;
+    }
 
 
+    public int Inscription(Client c, String mdp)
+    {
+        boolean checkifLoginIsUse = false;
+
+        for (Client value: getListClient()) {
+            if(value.getLogin().equals(c.getLogin()))
+            {
+                checkifLoginIsUse = true;
+                break;
+            }
+        }
+
+        if(!checkifLoginIsUse)
+        {
+            System.out.println(c.toString());
+            getListClient().add(c);
+            setmdp(c.getLogin(), mdp);
+            setPersonneConnecte(c);
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public int Connexion(String login, String mdp)
+    {
+        System.out.println(login + mdp);
+        boolean CheckIfLoginExist = false;
+        Client client = new Client();
+        for (Client value :getListClient()) {
+            System.out.println(value.getLogin() + getmdp(value.getLogin()));
+            if(value.getLogin().equals(login))
+            {
+                CheckIfLoginExist = true;
+                client = value;
+                break;
+            }
+        }
+
+        if(CheckIfLoginExist)
+        {
+            System.out.println(mdp);
+            if(this.getmdp(login).equals(mdp))
+            {
+                setPersonneConnecte(client);
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public String getmdp(String login)
+    {
+        try{
+
+            Properties p = new Properties();
+
+            p.load(new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"));
+
+            String mdp = p.getProperty(login);
+            return mdp;
+
+        }catch (FileNotFoundException e)
+        {
+            System.out.println("File not find");
+        } catch (IOException e) {
+            System.out.println("PROBLEME IOException");
+        }
+        return null;
+    }
+
+    public Table setReservation(Date dateReservation, int nbPersonne)
+    {
+        Map<Date, ArrayList<Table>> reservations = getMapReservation();
+
+        if(!reservations.containsKey(dateReservation))
+        {
+            reservations.put(dateReservation, new ArrayList<Table>());
+            System.out.println("NEVER USE DATE");
+        }
+
+        Table t = SearchTable(nbPersonne, reservations.get(dateReservation));
+
+        if(t != null)
+        {
+            reservations.get(dateReservation).add(t);
+            System.out.println("TABLE FIND");
+            return t;
+        }
+        else
+            return null;
+
+    }
+
+    public void setmdp(String Login, String mdp)
+    {
+
+        File F = new File("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties");
+
+        if(F.exists())
+        {
+            try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"))
+            {
+                Properties p = new Properties();
+                p.load(reader);
+                p.setProperty(Login, mdp);
+
+                try( FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"))
+                {
+                    p.store(writer, null);
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                System.out.println("file don't find ");
+            } catch (IOException e) {
+                System.out.println("Probleme de fichier");
+            }
+
+        }
+        else
+        {
+            Properties p = new Properties();
+            p.setProperty(Login, mdp);
+
+            try( FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"))
+            {
+                p.store(writer, null);
+            }
+            catch (FileNotFoundException e)
+            {
+                System.out.println("file don't find ");
+            } catch (IOException e) {
+                System.out.println("Probleme de fichier");
+            }
+        }
+    }
+
+    public Table SearchTable(int nbPersonne, ArrayList<Table> tables)
+    {
+        for (Salle value: ListSalle) {
+            for (Zone zone: value.getDifferenteZone()) {
+                for (Table table: zone.getVecTable()) {
+                    boolean checkTable = false;
+                    for (Table tableUse : tables) {
+                        if(tableUse.equals(table))
+                        {
+                            checkTable = true;
+                            break;
+                        }
+                    }
+
+                    if(!checkTable)
+                    {
+                        System.out.println("Coucou");
+                        return table;
+                    }
+
+                }
+            }
+        }
+        return null;
+    }
 
 
 }

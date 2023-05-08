@@ -1,9 +1,10 @@
 package MODEL;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class Menu {
+public class Menu implements Serializable {
 
     private int numMenu;
 

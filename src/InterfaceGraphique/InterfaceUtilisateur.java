@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class InterfaceUtilisateur extends JFrame {
     private JPanel panel1;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField TFLogin;
+    private JTextField TFMdp;
     private JButton CONNEXIONButton;
     private JButton dejaConnectéButton;
 
@@ -43,4 +43,11 @@ public class InterfaceUtilisateur extends JFrame {
         this.addWindowListener(C);
     }
 
+    public JTextField getTFLogin() {
+        return TFLogin;
+    }
+
+    public JTextField getTFMdp() {
+        return TFMdp;
+    }
 }

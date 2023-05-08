@@ -1,9 +1,10 @@
 package MODEL;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class Plat implements IMenu {
+public class Plat implements IMenu, Serializable {
 
     private int numPlat;
 

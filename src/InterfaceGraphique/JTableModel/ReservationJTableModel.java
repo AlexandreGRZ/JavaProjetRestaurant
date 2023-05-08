@@ -14,23 +14,19 @@ public class ReservationJTableModel extends AbstractTableModel {
 
     private String[] columnNames  = {"id", "nbPersonne", "Client", "Date"};
 
-    ReservationJTableModel(ArrayList<Resevation> data)
+    public ReservationJTableModel(ArrayList<Resevation> data)
     {
         this.data = data;
-
         AfficherElement();
     }
-
-
-
     @Override
     public int getRowCount() {
-        return 0;
+        return data.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 0;
+        return columnNames.length;
     }
 
     @Override
@@ -61,7 +57,7 @@ public class ReservationJTableModel extends AbstractTableModel {
     {
         for (int i = 0; i < data.size(); i++) {
             Resevation value = data.get(i);
-            for(int j = 0; j < 3; j++)
+            for(int j = 0; j < 4; j++)
             {
                 switch (j)
                 {

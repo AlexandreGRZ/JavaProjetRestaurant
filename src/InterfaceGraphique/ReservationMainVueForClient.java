@@ -4,26 +4,17 @@ import Controlleur.Controlleur;
 
 import javax.swing.*;
 
-public class ReservationMainView extends JFrame {
+public class ReservationMainVueForClient extends JFrame {
+    private JPanel panel1;
     private JTextField TFNbPersonne;
     private JTextField TFJour;
     private JTextField TFMois;
     private JTextField TFAnnee;
-    private JButton RESERVERBTN;
-    private JTextField TFNomPersonne;
+    private JButton RESERVERButton;
     private JTextField TFHeure;
     private JTextField TFMin;
-    private JPanel panel1;
-    private JButton RESERVERButton;
 
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-
-    }
-
-
-    public ReservationMainView(String Nom) {
+    public ReservationMainVueForClient(String Nom) {
 
         super(Nom);
 
@@ -64,7 +55,8 @@ public class ReservationMainView extends JFrame {
         return TFNbPersonne;
     }
 
-    public JTextField getTFNomPersonne() {
-        return TFNomPersonne;
-    }
+
+
+
+
 }

@@ -127,7 +127,7 @@ public class Zone {
 
         //test des Ajout et suppression
 
-        Table t2 = new Table(1, 5);
+        Table t2 = new Table(1, 5 );
         Table t3 = new Table(2, 5);
         Table t4 = new Table(3, 5);
 

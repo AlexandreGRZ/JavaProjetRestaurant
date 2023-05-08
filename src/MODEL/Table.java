@@ -10,6 +10,7 @@ public class Table {
         setNumTable(0);
 
         setNbPersonne(0);
+
     }
 
     public Table(int numTable, int NbPersonne)
@@ -17,6 +18,7 @@ public class Table {
         setNbPersonne(NbPersonne);
 
         setNumTable(numTable);
+
     }
 
     public Table(Table T)
@@ -24,6 +26,7 @@ public class Table {
         setNumTable(T.getNumTable());
 
         setNbPersonne(T.getNbPersonne());
+
     }
 
     public int getNbPersonne() {
@@ -33,6 +36,7 @@ public class Table {
     public int getNumTable() {
         return numTable;
     }
+
 
     public void setNbPersonne(int nbPersonne) {
         this.nbPersonne = nbPersonne;

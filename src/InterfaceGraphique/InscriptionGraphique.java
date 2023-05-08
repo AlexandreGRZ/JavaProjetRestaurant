@@ -8,10 +8,14 @@ import java.awt.*;
 public class InscriptionGraphique extends JFrame {
 
     private JPanel MainPanel;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
+    private JTextField TFNom;
+    private JTextField TFPrenom;
+    private JTextField TFLogin;
+    private JTextField TFNumTel;
+    private JTextField TFMdp;
+    private JTextField TFJour;
+    private JTextField TFMois;
+    private JTextField TFAnnee;
     private JButton INSCRIPTIONButton;
     private JButton déjaInscritButton;
 
@@ -45,5 +49,37 @@ public class InscriptionGraphique extends JFrame {
         INSCRIPTIONButton.addActionListener(C);
         déjaInscritButton.addActionListener(C);
         this.addWindowListener(C);
+    }
+
+    public JTextField getTFAnnee() {
+        return TFAnnee;
+    }
+
+    public JTextField getTFJour() {
+        return TFJour;
+    }
+
+    public JTextField getTFLogin() {
+        return TFLogin;
+    }
+
+    public JTextField getTFMdp() {
+        return TFMdp;
+    }
+
+    public JTextField getTFMois() {
+        return TFMois;
+    }
+
+    public JTextField getTFNom() {
+        return TFNom;
+    }
+
+    public JTextField getTFNumTel() {
+        return TFNumTel;
+    }
+
+    public JTextField getTFPrenom() {
+        return TFPrenom;
     }
 }

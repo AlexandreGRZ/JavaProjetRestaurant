@@ -1,11 +1,16 @@
 package MODEL;
-public class Resevation {
+
+import java.io.Serializable;
+
+public class Resevation implements Serializable {
 
     private int numReservation;
 
     private int nbPersonne;
 
     private Client Clients;
+
+    private Table Table;
 
     private Date datereservation;
 
@@ -21,7 +26,7 @@ public class Resevation {
 
     }
 
-    public Resevation(int numreservation, int nbPersonne, Client client, Date datereservation)
+    public Resevation(int numreservation, int nbPersonne, Client client, Date datereservation, Table table)
     {
         setNumReservation(numreservation);
 
@@ -30,6 +35,8 @@ public class Resevation {
         setClients(client);
 
         setDatereservation(datereservation);
+
+        setTable(table);
     }
 
     public Resevation( Resevation R)
@@ -41,6 +48,8 @@ public class Resevation {
         setClients(R.getClients());
 
         setDatereservation(R.getDatereservation());
+
+        setTable(R.getTable());
     }
 
     public int getNumReservation() {
@@ -59,6 +68,10 @@ public class Resevation {
         return datereservation;
     }
 
+    public MODEL.Table getTable() {
+        return Table;
+    }
+
     public void setNumReservation(int numReservation) {
         this.numReservation = numReservation;
     }
@@ -75,9 +88,13 @@ public class Resevation {
         this.datereservation = datereservation;
     }
 
+    public void setTable(MODEL.Table table) {
+        Table = table;
+    }
+
     public boolean equals(Resevation obj) {
        if(getNumReservation() == obj.getNumReservation() && getNbPersonne() == obj.getNumReservation()
-               && getClients().equals(obj.getClients()))
+               && getClients().equals(obj.getClients()) && getTable().equals(obj.getTable()))
            return true;
        else return false;
     }
@@ -95,7 +112,7 @@ public class Resevation {
 
        Resevation r1 = new Resevation();
 
-       Resevation r2 = new Resevation(1, 5, new Client(),new Date(3, 3 , 2003, 12, 40));
+       Resevation r2 = new Resevation(1, 5, new Client(),new Date(3, 3 , 2003, 12, 40), null);
 
        Resevation r3 = new Resevation(r2);
 

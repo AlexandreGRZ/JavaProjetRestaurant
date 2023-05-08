@@ -18,17 +18,21 @@ public class MaitreHotel extends Personne implements Affectation {
         setNbCommi(0);
 
         setZoneDeService(null);
+
+        setType("MH");
     }
 
-    public MaitreHotel(int numServeur, Zone ZoneDeService, int nbCommi ,String nom, String prenom, String Login, String Mdp, int day, int month, int year )
+    public MaitreHotel(int numServeur, Zone ZoneDeService, int nbCommi ,String nom, String prenom, String Login, int day, int month, int year )
     {
-        super(nom, prenom, Login, Mdp, day, month, year);
+        super(nom, prenom, Login, day, month, year);
 
         setNumServeur(numServeur);
 
         setZoneDeService(ZoneDeService);
 
         setNbCommi(nbCommi);
+
+        setType("MH");
     }
 
     public MaitreHotel(MaitreHotel M){
@@ -39,6 +43,8 @@ public class MaitreHotel extends Personne implements Affectation {
         setNbCommi(M.getNbCommi());
 
         setZoneDeService(M.getZoneDeService());
+
+        setType("MH");
     }
 
     public void setNumServeur(int numServeur) {
@@ -79,7 +85,7 @@ public class MaitreHotel extends Personne implements Affectation {
     public boolean equals(MaitreHotel obj) {
         if(getNom().equals(obj.getNom()) && getPrenom().equals(obj.getPrenom())
                 && getLogin().equals(obj.getLogin()) && getBirthDay().equals(obj.getBirthDay())
-                && getMotsDePasse().equals(obj.getMotsDePasse()) && getZoneDeService().equals(obj.getZoneDeService())
+                && getZoneDeService().equals(obj.getZoneDeService())
                 && getZoneDeService().equals(obj.getZoneDeService()) && getNbCommi() == obj.getNbCommi()
         )
             return true;
@@ -97,7 +103,6 @@ public class MaitreHotel extends Personne implements Affectation {
                 ", Prenom='" + getPrenom() + '\'' +
                 ", BirthDay=" + getBirthDay() +
                 ", Login='" + getLogin() + '\'' +
-                ", MotsDePasse='" + getMotsDePasse() + '\'' +
                 '}';
     }
 
@@ -109,7 +114,7 @@ public class MaitreHotel extends Personne implements Affectation {
         MaitreHotel c1 = new MaitreHotel();
 
         MaitreHotel c2 = new MaitreHotel(1, new Zone(1, 50, 5, new ArrayList<Table>()), 0,
-                "GRZEGORCZYK" ,"ALEXANDRE", "Papyrusse", "123456789", 30, 03, 2003 );
+                "GRZEGORCZYK" ,"ALEXANDRE", "Papyrusse", 30, 03, 2003 );
 
         MaitreHotel c3 = new MaitreHotel(c2);
 

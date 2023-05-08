@@ -95,6 +95,13 @@ public class Date {
 
     @Override
     public String toString() {
-        return getJour() + " / " + getMois() + " / " + getAnnee() + "   " + getHeure() + " : " + getHeure();
+        return getJour() + "/" + getMois() + "/" + getAnnee() + "   " + getHeure() + " : " + getHeure();
+    }
+
+    public boolean equals(Date obj) {
+        if(obj.getJour() == getJour() && obj.getMois() == getMois() && obj.getAnnee() == getAnnee())
+            return true;
+        else
+            return false;
     }
 }

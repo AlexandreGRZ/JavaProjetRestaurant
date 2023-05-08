@@ -2,6 +2,7 @@ package InterfaceGraphique;
 
 import Controlleur.Controlleur;
 import InterfaceGraphique.JTableModel.PlatJtableModel;
+import InterfaceGraphique.JTableModel.ReservationJTableModel;
 import MODEL.Menu;
 import MODEL.Plat;
 import MODEL.Resevation;
@@ -45,7 +46,7 @@ public class MainPage extends JFrame  {
         menu = dataMenu;
         dataReservation = datareservation;
 
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setContentPane(panel1);
 
@@ -76,6 +77,12 @@ public class MainPage extends JFrame  {
     {
         PlatJtableModel model = new PlatJtableModel(menu.getListPlats());
         JTMenu.setModel(model);
+    }
+
+    public void setNewModelReservation()
+    {
+        ReservationJTableModel model = new ReservationJTableModel(dataReservation);
+        JTReservation.setModel(model);
     }
 
 

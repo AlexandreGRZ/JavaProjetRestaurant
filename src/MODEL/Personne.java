@@ -1,15 +1,15 @@
 package MODEL;
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Personne {
+public abstract class Personne implements Serializable {
 
     private String Nom;
     private String Prenom;
     private Date BirthDay;
-
     private String Login;
+    private String Type = "C";
 
-    private String MotsDePasse;
 
 
     public Personne(){
@@ -23,11 +23,11 @@ public abstract class Personne {
 
         setLogin("Inconnu");
 
-        setMotsDePasse("   ");
+
 
     }
 
-    public Personne(String nom, String prenom, String Login, String Mdp, int day, int month, int year){
+    public Personne(String nom, String prenom, String Login, int day, int month, int year){
 
         setNom(nom);
 
@@ -39,7 +39,6 @@ public abstract class Personne {
 
         setLogin(Login);
 
-        setMotsDePasse(Mdp);
 
     }
 
@@ -52,8 +51,6 @@ public abstract class Personne {
         setBirthDay(p.getBirthDay());
 
         setLogin(p.getLogin());
-
-        setMotsDePasse((p.getMotsDePasse()));
 
     }
     public Date getBirthDay() {
@@ -72,8 +69,8 @@ public abstract class Personne {
         return Login;
     }
 
-    public String getMotsDePasse() {
-        return MotsDePasse;
+    public String getType() {
+        return Type;
     }
 
     public void setBirthDay(Date birthDay) {BirthDay = new Date(birthDay.getTime());
@@ -91,14 +88,13 @@ public abstract class Personne {
         Prenom = prenom;
     }
 
-    public void setMotsDePasse(String motsDePasse) {
-        MotsDePasse = motsDePasse;
+    public void setType(String type) {
+        Type = type;
     }
 
     public boolean equals(Personne obj) {
         if(getNom().equals(obj.getNom()) && getPrenom().equals(obj.getPrenom())
-                && getBirthDay().equals(obj.getBirthDay())
-                && getMotsDePasse().equals(obj.getMotsDePasse()))
+                && getBirthDay().equals(obj.getBirthDay()))
             return true;
         else
             return false;
@@ -111,7 +107,6 @@ public abstract class Personne {
                 ", Prenom='" + Prenom + '\'' +
                 ", BirthDay=" + BirthDay +
                 ", Login='" + Login + '\'' +
-                ", MotsDePasse='" + MotsDePasse + '\'' +
                 '}';
     }
 

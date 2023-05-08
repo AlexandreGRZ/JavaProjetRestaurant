@@ -21,14 +21,14 @@ public class Serveur extends Personne implements Affectation {
 
         setZoneDeService(null);
 
-
+        setType("S");
 
     }
 
-    public Serveur(int numServeur, String Grade, MaitreHotel chef, Zone ZoneDeService, String nom, String prenom, String Login, String Mdp, int day, int month, int year)
+    public Serveur(int numServeur, String Grade, MaitreHotel chef, Zone ZoneDeService, String nom, String prenom, String Login, int day, int month, int year)
     {
 
-        super(nom, prenom, Login, Mdp, day, month, year);
+        super(nom, prenom, Login, day, month, year);
 
         setNumServeur(numServeur);
 
@@ -37,6 +37,8 @@ public class Serveur extends Personne implements Affectation {
         setChef(chef);
 
         setZoneDeService(ZoneDeService);
+
+        setType("S");
     }
 
     public Serveur(Serveur c){
@@ -49,6 +51,8 @@ public class Serveur extends Personne implements Affectation {
         setChef(c.getChef());
 
         setZoneDeService(c.getZoneDeService());
+
+        setType(c.getType());
     }
 
     public int getNumServeur() {
@@ -97,7 +101,7 @@ public class Serveur extends Personne implements Affectation {
     public boolean equals(Serveur obj) {
         if(getNom().equals(obj.getNom()) && getPrenom().equals(obj.getPrenom())
                 && getLogin().equals(obj.getLogin()) && getBirthDay().equals(obj.getBirthDay())
-                && getMotsDePasse().equals(obj.getMotsDePasse()) && getChef().equals(obj.getChef())
+                && getChef().equals(obj.getChef())
                 && getZoneDeService().equals(obj.getZoneDeService()) && getGrade().equals(obj.getGrade()))
             return true;
         else
@@ -120,7 +124,7 @@ public class Serveur extends Personne implements Affectation {
 
         Serveur s1 = new Serveur();
 
-        Serveur s2 = new Serveur(1, "COMI", new MaitreHotel(), new Zone(), "GRZEGORCZYK" ,"ALEXANDRE", "Papyrusse", "123456789", 30, 03, 2003 );
+        Serveur s2 = new Serveur(1, "COMI", new MaitreHotel(), new Zone(), "GRZEGORCZYK" ,"ALEXANDRE", "Papyrusse", 30, 03, 2003 );
 
         Serveur s3 = new Serveur(s2);
 
