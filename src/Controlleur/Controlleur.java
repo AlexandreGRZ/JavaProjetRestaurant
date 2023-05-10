@@ -129,7 +129,7 @@ public class Controlleur implements ActionListener, WindowListener {
                     {
                         Resevation r = new Resevation(restaurant.getListReservation().size(),
                                 Integer.parseInt(ReservationMainVue.getTFNbPersonne().getText()),
-                                restaurant.SearchClient(ReservationMainVue.getTFNomPersonne().getText()),
+                                (Client) restaurant.SearchClient(ReservationMainVue.getTFNomPersonne().getText()),
                                 d,t); // A MODIFIER ______________________
                         restaurant.getListReservation().add(r);
                         System.out.println(restaurant.getListReservation().toString());
@@ -166,22 +166,24 @@ public class Controlleur implements ActionListener, WindowListener {
                     ConnexionWindow.dispose();
                     if(restaurant.getPersonneConnecte().getType().equals("C"))
                     {
-                        mainVueForClient = new MainPageForClient("test", restaurant.getMenu(), restaurant.getListReservation());
+                        mainVueForClient = new MainPageForClient("test", restaurant.getMenu(), restaurant.getListReservationAfficher());
                         mainVueForClient.setControlleur(this);
                         mainVueForClient.setNewModelMenu();
                         mainVueForClient.setNewModelReservation();
                         mainVueForClient.setVisible(true);
+                        mainvue = new MainPage("test", restaurant.getListDePlat(), restaurant.getMenu(),restaurant.getListReservation());
 
                     }
                     else
                     {
                         mainvue = new MainPage("test", restaurant.getListDePlat(), restaurant.getMenu(),
-                                restaurant.getListReservation());
+                                restaurant.getListReservationAfficher());
                         mainvue.setControlleur(this);
                         mainvue.setNewModelReservation();
                         mainvue.setNewModelMenu();
                         mainvue.setNewModelPlat();
                         mainvue.setVisible(true);
+                        mainVueForClient = new MainPageForClient("test", restaurant.getMenu(), restaurant.getListReservation());
                     }
                 }
                 else
@@ -193,12 +195,11 @@ public class Controlleur implements ActionListener, WindowListener {
             if(e.getActionCommand().equals("INSCRIPTION"))
             {
 
-                Client c = new Client(restaurant.getListClient().size(),InscriptionWindow.getTFNumTel().getText(),
+                Client c = new Client(restaurant.getListPersonne().size(),InscriptionWindow.getTFNumTel().getText(),
                         InscriptionWindow.getTFNom().getText(), InscriptionWindow.getTFPrenom().getText(),
                         InscriptionWindow.getTFLogin().getText(), Integer.parseInt(InscriptionWindow.getTFJour().getText())
                         , Integer.parseInt(InscriptionWindow.getTFMois().getText()) ,
                         Integer.parseInt(InscriptionWindow.getTFAnnee().getText()));
-                System.out.println(c.toString());
                 int resultat = restaurant.Inscription(c, InscriptionWindow.getTFMdp().getText());
 
                 if(resultat == 1)
@@ -276,6 +277,36 @@ public class Controlleur implements ActionListener, WindowListener {
 
             }
 
+            if(e.getSource() == mainVueForClient.getCBMois() || e.getSource() == mainVueForClient.getCBANNEE() || mainvue.getCBMois() == e.getSource() || e.getSource() == mainvue.getCBANNEE())
+            {
+                if (restaurant.getPersonneConnecte().getType().equals("C"))
+                    mainVueForClient.ChangeNbJour();
+                else
+                    mainvue.ChangeNbJour();
+
+            }
+
+            if(e.getActionCommand().equals("RECHERCHER"))
+            {
+                if(restaurant.getPersonneConnecte().getType() == "C")
+                {
+                    ArrayList<Resevation> List = restaurant.ReservationAAfficher((int) mainVueForClient.getCBJOUR().getSelectedItem(),
+                            (int) mainVueForClient.getCBMois().getSelectedItem(), (int) mainVueForClient.getCBANNEE().getSelectedItem());
+
+                    mainVueForClient.setDataReservation(List);
+                    mainVueForClient.setNewModelReservation();
+                }
+                else
+                {
+                    ArrayList<Resevation> List = restaurant.ReservationAAfficher((int) mainvue.getCBJOUR().getSelectedItem(),
+                            (int) mainvue.getCBMois().getSelectedItem(), (int) mainvue.getCBANNEE().getSelectedItem());
+
+                    mainvue.setDataReservation(List);
+                    mainvue.setNewModelReservation();
+                }
+
+
+            }
     }
 
     @Override
@@ -288,7 +319,9 @@ public class Controlleur implements ActionListener, WindowListener {
 
         restaurant.SavePlat(restaurant.getListDePlat());
         restaurant.SaveMenu(restaurant.getMenu());
-        restaurant.SaveClient(restaurant.getListClient());
+        restaurant.SaveClient(restaurant.getListPersonne());
+        restaurant.SaveMapReservation();
+        restaurant.SaveReservation(restaurant.getListReservation());
 
         e.getWindow().setVisible(false);
     }

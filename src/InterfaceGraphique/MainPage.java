@@ -21,9 +21,13 @@ public class MainPage extends JFrame  {
     private JButton SUPPRIMERDUMENUButton;
     private JButton CREEPLATButton;
     private JButton SUPPRIMERUNPLATButton;
-    private JButton ajouterUneReservationButton;
-    private JButton SUPPRIMERButton;
+    private JButton RESERVERButton;
     private JTable JTReservation;
+    private JComboBox CBJOUR;
+    private JComboBox CBMois;
+    private JComboBox CBANNEE;
+    private JButton RECHERCHERButton;
+    private JButton SUPPRIMERButton1;
 
     private ArrayList<Plat> dataPlat;
 
@@ -46,6 +50,8 @@ public class MainPage extends JFrame  {
         menu = dataMenu;
         dataReservation = datareservation;
 
+        AfficherLesElementCBox();
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setContentPane(panel1);
@@ -61,8 +67,11 @@ public class MainPage extends JFrame  {
         CREEPLATButton.addActionListener(C);
         SUPPRIMERDUMENUButton.addActionListener(C);
         SUPPRIMERUNPLATButton.addActionListener(C);
-        SUPPRIMERButton.addActionListener(C);
-        ajouterUneReservationButton.addActionListener(C);
+        RESERVERButton.addActionListener(C);
+        RECHERCHERButton.addActionListener(C);
+        CBJOUR.addActionListener(C);
+        CBMois.addActionListener(C);
+        CBANNEE.addActionListener(C);
 
         this.addWindowListener(C);
     }
@@ -79,10 +88,111 @@ public class MainPage extends JFrame  {
         JTMenu.setModel(model);
     }
 
+    public void setDataReservation(ArrayList<Resevation> dataReservation) {
+        this.dataReservation = dataReservation;
+    }
+
     public void setNewModelReservation()
     {
         ReservationJTableModel model = new ReservationJTableModel(dataReservation);
         JTReservation.setModel(model);
+    }
+    public JComboBox getCBJOUR() {
+        return CBJOUR;
+    }
+
+    public JComboBox getCBMois() {
+        return CBMois;
+    }
+
+    public JComboBox getCBANNEE() {
+        return CBANNEE;
+    }
+
+    public void AfficherLesElementCBox() {
+
+        for (int i = 1; i < 31; i++)
+        {
+            CBJOUR.addItem(i);
+        }
+
+        for (int i = 1; i < 12; i++) {
+            CBMois.addItem(i);
+        }
+
+        for (int i = 2023; i < 2030; i++) {
+            CBANNEE.addItem(i);
+
+        }
+
+    }
+    public void ChangeNbJour()
+    {
+        int Mois = (int) CBMois.getSelectedItem();
+        int Annee = (int) CBANNEE.getSelectedItem();
+        CBJOUR.removeAllItems();
+        System.out.println("coucou");
+        if(Mois == 1 || Mois == 3 || Mois == 5 || Mois == 7 || Mois == 8 || Mois == 10 || Mois == 12)
+        {
+
+            for (int i = 1; i < 32; i++)
+            {
+                CBJOUR.addItem(i);
+                CBJOUR.setSelectedItem(1);
+            }
+        }
+        else
+        {
+            if(Mois != 2)
+            {
+                for (int i = 1; i < 31; i++)
+                {
+                    CBJOUR.addItem(i);
+                    CBJOUR.setSelectedItem(1);
+                }
+            }
+            else
+            {
+                if(Annee % 4 == 0 )
+                {
+                    if(Annee % 100 == 0)
+                    {
+                        if(Annee % 400 == 0)
+                        {
+                            for (int i = 1; i < 30; i++)
+                            {
+                                CBJOUR.addItem(i);
+                                CBJOUR.setSelectedItem(1);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 1; i < 29; i++)
+                            {
+                                CBJOUR.addItem(i);
+                                CBJOUR.setSelectedItem(1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 1; i < 30; i++)
+                        {
+                            CBJOUR.addItem(i);
+                            CBJOUR.setSelectedItem(1);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < 29; i++)
+                    {
+                        CBJOUR.addItem(i);
+                        CBJOUR.setSelectedItem(1);
+                    }
+                }
+            }
+        }
     }
 
 

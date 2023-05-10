@@ -4,6 +4,7 @@ import InterfaceGraphique.MainPage;
 import MODEL.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 public class Main {
@@ -18,6 +19,9 @@ public class Main {
         Restaurant.LoadMenu();
         Restaurant.LoadClient();
         Restaurant.LoadMapReservation();
+        Restaurant.LoadReservation();
+
+        System.out.println(Restaurant.getListPersonne());
 
         Table t1 = new Table(1, 6);
         Table t2 = new Table(2, 6);
@@ -40,9 +44,9 @@ public class Main {
         Restaurant.getListSalle().add(s1);
 
         System.out.println("LOAD");
-        for(int i = 0 ; i < Restaurant.getListClient().size(); i++)
+        for(int i = 0 ; i < Restaurant.getListPersonne().size(); i++)
         {
-            System.out.println(Restaurant.getListClient().get(i).toString() + " ");
+            System.out.println(Restaurant.getListPersonne().get(i).toString() + " ");
 
         }
 
@@ -50,6 +54,7 @@ public class Main {
         InterfaceUtilisateur w = new InterfaceUtilisateur("test");
 
         Controlleur controleur = new Controlleur(Restaurant,w);
+
         w.setControlleur(controleur);
         w.setVisible(true);
     }

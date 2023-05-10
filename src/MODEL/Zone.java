@@ -1,9 +1,10 @@
 package MODEL;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Zone {
+public class Zone implements Serializable {
 
     private int NumZone;
 

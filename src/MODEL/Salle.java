@@ -1,9 +1,10 @@
 
 package MODEL;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Salle {
+public class Salle implements Serializable {
 
     private int NumSalle;
 

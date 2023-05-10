@@ -14,17 +14,19 @@ public class Restaurant {
 
 
     ArrayList<Resevation> ListReservation = new ArrayList<Resevation>();
+
+    ArrayList<Resevation> ListReservationAfficher = new ArrayList<Resevation>();
     Menu Menu = new Menu(1, new ArrayList<Plat>(), new ArrayList<Boisson>());
     ArrayList<Plat> ListDePlat = new ArrayList<Plat>();
     ArrayList<Aliment> ListAliment = new ArrayList<Aliment>(); // a charger depuis un fichier
     ArrayList<Aliment> ListAlimentAfficher = new ArrayList<Aliment>();
     ArrayList<Boisson> ListBoisson = new ArrayList<Boisson>(); // a charger depuis un fichier
-    ArrayList<Client> ListClient = new ArrayList<Client>();
-    ArrayList<Serveur> ListServeur = new ArrayList<Serveur>();
-    ArrayList<MaitreHotel>ListMaitreHotel = new ArrayList<MaitreHotel>();
+    ArrayList<Personne> ListPersonne = new ArrayList<Personne>();
     ArrayList<Salle> ListSalle = new ArrayList<Salle>(); // a charger depuis un fichier
 
-    Map<Date, ArrayList<Table>> MapReservation = new HashMap<>();
+
+
+    Map<String, ArrayList<Table>> MapReservation = new HashMap<>();
 
     private static Restaurant r1;
 
@@ -42,21 +44,6 @@ public class Restaurant {
 
         return r1;
     }
-    public void AjouterClient(Client c1)
-    {
-        getListClient().add(c1);
-    }
-
-    public void AjouterUnServeur(Serveur s1)
-    {
-        getListServeur().add(s1);
-    }
-
-    public void AjouterUnMaitreHotel(MaitreHotel m1)
-    {
-        getListMaitreHotel().add(m1);
-    }
-
     public void AjouterPlat(Plat p1)
     {
         getListDePlat().add(p1);
@@ -94,16 +81,8 @@ public class Restaurant {
         return ListDePlat;
     }
 
-    public ArrayList<Client> getListClient() {
-        return ListClient;
-    }
-
-    public ArrayList<MaitreHotel> getListMaitreHotel() {
-        return ListMaitreHotel;
-    }
-
-    public ArrayList<Serveur> getListServeur() {
-        return ListServeur;
+    public ArrayList<Personne> getListPersonne() {
+        return ListPersonne;
     }
 
     public ArrayList<Resevation> getListReservation() {
@@ -122,8 +101,12 @@ public class Restaurant {
         return Menu;
     }
 
-    public Map<Date, ArrayList<Table>> getMapReservation() {
+    public Map<String, ArrayList<Table>> getMapReservation() {
         return MapReservation;
+    }
+
+    public ArrayList<Resevation> getListReservationAfficher() {
+        return ListReservationAfficher;
     }
 
     public void setListDePlat(ArrayList<Plat> listDePlat) {
@@ -142,13 +125,6 @@ public class Restaurant {
         ListBoisson = listBoisson;
     }
 
-    public void setListClient(ArrayList<Client> listClient) {
-        ListClient = listClient;
-    }
-
-    public void setListMaitreHotel(ArrayList<MaitreHotel> listMaitreHotel) {
-        ListMaitreHotel = listMaitreHotel;
-    }
 
     public void setListReservation(ArrayList<Resevation> listReservation) {
         ListReservation = listReservation;
@@ -158,8 +134,8 @@ public class Restaurant {
         ListSalle = listSalle;
     }
 
-    public void setListServeur(ArrayList<Serveur> listServeur) {
-        ListServeur = listServeur;
+    public void setListPersonne(ArrayList<Personne> listPersonne) {
+        ListPersonne = listPersonne;
     }
 
     public void setMenu(MODEL.Menu menu) {
@@ -170,8 +146,12 @@ public class Restaurant {
         PersonneConnecte = personneConnecte;
     }
 
-    public void setMapReservation(Map<Date, ArrayList<Table>> mapReservation) {
+    public void setMapReservation(Map<String, ArrayList<Table>> mapReservation) {
         MapReservation = mapReservation;
+    }
+
+    public void setListReservationAfficher(ArrayList<Resevation> listReservationAfficher) {
+        ListReservationAfficher = listReservationAfficher;
     }
 
     public Personne getPersonneConnecte() {
@@ -183,7 +163,7 @@ public class Restaurant {
 
     public void LoadAliment()
     {
-        try(CSVReader reader = new CSVReader(new FileReader("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/CSV/Aliment.csv")))
+        try(CSVReader reader = new CSVReader(new FileReader("E:\\Cours\\Java\\JavaProjetRestaurant\\CSV\\Aliment.csv")))
         {
             reader.readNext();
 
@@ -215,7 +195,7 @@ public class Restaurant {
 
     public void SavePlat(ArrayList<Plat> data)
     {
-        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Plat");
+        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Plat");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
             for (Plat p: data) {
@@ -229,7 +209,7 @@ public class Restaurant {
 
     public void SaveMenu(Menu menu)
     {
-        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Menu");
+        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Menu");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
             objectOutputStream.writeObject(menu);
@@ -239,12 +219,12 @@ public class Restaurant {
 
     }
 
-    public void SaveClient(ArrayList<Client> data)
+    public void SaveClient(ArrayList<Personne> data)
     {
-        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Client");
+        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Client");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
-            for (Client value: data) {
+            for (Personne value: data) {
                 System.out.println(value.toString());
                 objectOutputStream.writeObject(value);
             }
@@ -254,9 +234,9 @@ public class Restaurant {
 
     }
 
-    public void SaveMapReservation(Menu menu)
+    public void SaveMapReservation()
     {
-        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/MapReservation");
+        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\MapReservation");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
             objectOutputStream.writeObject(MapReservation);
@@ -265,9 +245,24 @@ public class Restaurant {
         }
 
     }
+
+    public void SaveReservation(ArrayList<Resevation> data)
+    {
+        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Reservation");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
+        {
+            for (Resevation value: data) {
+                System.out.println(value.toString());
+                objectOutputStream.writeObject(value);
+            }
+        }catch (IOException e) {
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+        }
+
+    }
     public void LoadPlat()
     {
-        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Plat");
+        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Plat");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
             Plat p = (Plat) objectInputStream.readObject();
@@ -285,10 +280,14 @@ public class Restaurant {
 
     public void LoadMapReservation()
     {
-        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/MapReservation");
+        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\MapReservation");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
-           setMapReservation( (Map<Date, ArrayList<Table>>) objectInputStream.readObject());
+            Map<String, ArrayList<Table>> t = (Map<String, ArrayList<Table>>) objectInputStream.readObject();
+
+            System.out.println(t.toString());
+
+            setMapReservation( t );
         }
         catch (IOException | ClassNotFoundException e)
         {
@@ -297,15 +296,34 @@ public class Restaurant {
     }
     public void LoadClient()
     {
-        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Client");
+        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Client");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
-            Client c = (Client) objectInputStream.readObject();
+            Personne c = (Personne) objectInputStream.readObject();
             while (c != null)
             {
                 System.out.println(c.toString());
-                getListClient().add(c);
-                c = (Client) objectInputStream.readObject();
+                getListPersonne().add(c);
+                c = (Personne) objectInputStream.readObject();
+            }
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+        }
+    }
+
+    public void LoadReservation()
+    {
+        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Reservation");
+            ObjectInputStream objectInputStream = new ObjectInputStream(reader))
+        {
+            Resevation c = (Resevation) objectInputStream.readObject();
+            while (c != null)
+            {
+                System.out.println(c.toString());
+                getListReservation().add(c);
+                c = (Resevation) objectInputStream.readObject();
             }
         }
         catch (IOException | ClassNotFoundException e)
@@ -316,7 +334,7 @@ public class Restaurant {
 
     public void LoadMenu()
     {
-        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/Menu");
+        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Menu");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
             Menu m = (Menu) objectInputStream.readObject();
@@ -333,12 +351,12 @@ public class Restaurant {
         return getListDePlat().get(indice);
     }
 
-    public Client SearchClient(String nom)
+    public Personne SearchClient(String nom)
     {
-        for(int i = 0; i < getListClient().size(); i++)
+        for(int i = 0; i < getListPersonne().size(); i++)
         {
-            if(getListClient().get(i).getNom().equals(nom))
-                return getListClient().get(i);
+            if(getListPersonne().get(i).getNom().equals(nom))
+                return getListPersonne().get(i);
         }
         return null;
     }
@@ -348,7 +366,7 @@ public class Restaurant {
     {
         boolean checkifLoginIsUse = false;
 
-        for (Client value: getListClient()) {
+        for (Personne value: getListPersonne()) {
             if(value.getLogin().equals(c.getLogin()))
             {
                 checkifLoginIsUse = true;
@@ -358,8 +376,7 @@ public class Restaurant {
 
         if(!checkifLoginIsUse)
         {
-            System.out.println(c.toString());
-            getListClient().add(c);
+            getListPersonne().add(c);
             setmdp(c.getLogin(), mdp);
             setPersonneConnecte(c);
             return 1;
@@ -374,8 +391,8 @@ public class Restaurant {
     {
         System.out.println(login + mdp);
         boolean CheckIfLoginExist = false;
-        Client client = new Client();
-        for (Client value :getListClient()) {
+        Personne client = null;
+        for (Personne value : getListPersonne()) {
             System.out.println(value.getLogin() + getmdp(value.getLogin()));
             if(value.getLogin().equals(login))
             {
@@ -410,7 +427,7 @@ public class Restaurant {
 
             Properties p = new Properties();
 
-            p.load(new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"));
+            p.load(new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties"));
 
             String mdp = p.getProperty(login);
             return mdp;
@@ -423,44 +440,20 @@ public class Restaurant {
         }
         return null;
     }
-
-    public Table setReservation(Date dateReservation, int nbPersonne)
-    {
-        Map<Date, ArrayList<Table>> reservations = getMapReservation();
-
-        if(!reservations.containsKey(dateReservation))
-        {
-            reservations.put(dateReservation, new ArrayList<Table>());
-            System.out.println("NEVER USE DATE");
-        }
-
-        Table t = SearchTable(nbPersonne, reservations.get(dateReservation));
-
-        if(t != null)
-        {
-            reservations.get(dateReservation).add(t);
-            System.out.println("TABLE FIND");
-            return t;
-        }
-        else
-            return null;
-
-    }
-
     public void setmdp(String Login, String mdp)
     {
 
-        File F = new File("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties");
+        File F = new File("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties");
 
         if(F.exists())
         {
-            try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"))
+            try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties"))
             {
                 Properties p = new Properties();
                 p.load(reader);
                 p.setProperty(Login, mdp);
 
-                try( FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"))
+                try( FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties"))
                 {
                     p.store(writer, null);
                 }
@@ -478,7 +471,7 @@ public class Restaurant {
             Properties p = new Properties();
             p.setProperty(Login, mdp);
 
-            try( FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"))
+            try( FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties"))
             {
                 p.store(writer, null);
             }
@@ -490,6 +483,32 @@ public class Restaurant {
             }
         }
     }
+
+    public Table setReservation(Date dateReservation, int nbPersonne)
+    {
+        Map<String, ArrayList<Table>> reservations = getMapReservation();
+
+        if(!reservations.containsKey(dateReservation.toString()))
+        {
+            reservations.put(dateReservation.toString(), new ArrayList<Table>());
+            System.out.println("NEVER USE DATE");
+        }
+
+        System.out.println(reservations.get(dateReservation.toString()));
+        Table t = SearchTable(nbPersonne, reservations.get(dateReservation.toString()));
+
+        if(t != null)
+        {
+            reservations.get(dateReservation.toString()).add(t);
+            System.out.println(reservations.get(dateReservation.toString()));
+            System.out.println("TABLE FIND");
+            return t;
+        }
+        else
+            return null;
+
+    }
+
 
     public Table SearchTable(int nbPersonne, ArrayList<Table> tables)
     {
@@ -508,7 +527,13 @@ public class Restaurant {
                     if(!checkTable)
                     {
                         System.out.println("Coucou");
-                        return table;
+                        if(nbPersonne <= table.getNbPersonne())
+                        {
+                            return table;
+                        }
+                        else
+                            break;
+
                     }
 
                 }
@@ -516,6 +541,28 @@ public class Restaurant {
         }
         return null;
     }
+
+    public ArrayList<Resevation> ReservationAAfficher(int jour, int Mois, int Annee)
+    {
+        Date d = new Date(jour, Mois, Annee, 12, 30);
+        ListReservationAfficher = new ArrayList<Resevation>();
+        for (Resevation value: ListReservation) {
+
+            System.out.println(value.toString() + d.toString());
+
+            if(value.getDatereservation().toString().equals(d.toString()))
+            {
+                ListReservationAfficher.add(value);
+            }
+
+        }
+        System.out.println(ListReservationAfficher);
+        setListReservationAfficher(ListReservationAfficher);
+        return ListReservationAfficher;
+
+    }
+
+
 
 
 }
