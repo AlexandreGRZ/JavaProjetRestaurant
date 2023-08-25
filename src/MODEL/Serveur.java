@@ -25,7 +25,7 @@ public class Serveur extends Personne implements Affectation {
 
     }
 
-    public Serveur(int numServeur, String Grade, MaitreHotel chef, Zone ZoneDeService, String nom, String prenom, String Login, int day, int month, int year)
+    public Serveur(int numServeur, String Grade, String nom, String prenom, String Login, int day, int month, int year)
     {
 
         super(nom, prenom, Login, day, month, year);
@@ -124,7 +124,7 @@ public class Serveur extends Personne implements Affectation {
 
         Serveur s1 = new Serveur();
 
-        Serveur s2 = new Serveur(1, "COMI", new MaitreHotel(), new Zone(), "GRZEGORCZYK" ,"ALEXANDRE", "Papyrusse", 30, 03, 2003 );
+        Serveur s2 = new Serveur(1, "COMI", "GRZEGORCZYK" ,"ALEXANDRE", "Papyrusse", 30, 03, 2003 );
 
         Serveur s3 = new Serveur(s2);
 

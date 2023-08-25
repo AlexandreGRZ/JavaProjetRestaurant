@@ -20,7 +20,7 @@ public class InterfaceUtilisateur extends JFrame {
     public InterfaceUtilisateur(String Nom) {
         super(Nom);
 
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setContentPane(panel1);
 

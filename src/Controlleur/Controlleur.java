@@ -3,7 +3,7 @@ package Controlleur;
 import InterfaceGraphique.*;
 import MODEL.*;
 
-import javax.print.DocFlavor;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,15 +45,17 @@ public class Controlleur implements ActionListener, WindowListener {
 
             if(e.getActionCommand().equals("DECONNEXION"))
             {
-                restaurant.setPersonneConnecte(null);
-                if(mainvue != null)
+
+                if(restaurant.getPersonneConnecte().getType().equals("S"))
                     mainvue.dispose();
                 else
                     mainVueForClient.dispose();
 
-                InterfaceUtilisateur w = new InterfaceUtilisateur("test");
-                w.setControlleur(this);
-                w.setVisible(true);
+                restaurant.setPersonneConnecte(null);
+
+                ConnexionWindow = new InterfaceUtilisateur("test");
+                ConnexionWindow.setControlleur(this);
+                ConnexionWindow.setVisible(true);
             }
 
             if(e.getActionCommand().equals("AJOUTER PLAT"))
@@ -142,14 +144,9 @@ public class Controlleur implements ActionListener, WindowListener {
                     }
                 }
 
-
-
-
-
-
             }
 
-            if(e.getActionCommand().equals("Deja Connecté"))
+            if(e.getActionCommand().equals("Pas Encore Incrit"))
             {
                 ConnexionWindow.dispose();
                 InscriptionWindow = new InscriptionGraphique("test");
@@ -159,11 +156,12 @@ public class Controlleur implements ActionListener, WindowListener {
 
             if(e.getActionCommand().equals("CONNEXION"))
             {
-                int resultat = restaurant.Connexion(ConnexionWindow.getTFLogin().getText(), ConnexionWindow.getTFMdp().getText());
-
+                int resultat = restaurant.getConnexion().Connexion(ConnexionWindow.getTFLogin().getText(), ConnexionWindow.getTFMdp().getText());
+                System.out.println(resultat);
                 if(resultat == 1)
                 {
                     ConnexionWindow.dispose();
+                    System.out.println(restaurant.getPersonneConnecte());
                     if(restaurant.getPersonneConnecte().getType().equals("C"))
                     {
                         mainVueForClient = new MainPageForClient("test", restaurant.getMenu(), restaurant.getListReservationAfficher());
@@ -204,13 +202,25 @@ public class Controlleur implements ActionListener, WindowListener {
 
                 if(resultat == 1)
                 {
-                    MainPage m = new MainPage("test", restaurant.getListDePlat(), restaurant.getMenu(), restaurant.getListReservation());
-                    mainvue = m;
-                    mainvue.setControlleur(this);
-                    mainvue.setNewModelReservation();
-                    mainvue.setNewModelMenu();
-                    mainvue.setNewModelPlat();
-                    mainvue.setVisible(true);
+                    if(c.getType().equals("C"))
+                    {
+                        MainPageForClient m = new MainPageForClient("test", restaurant.getMenu(), restaurant.getListReservation());
+                        mainVueForClient = m;
+                        mainVueForClient.setControlleur(this);
+                        mainVueForClient.setNewModelReservation();
+                        mainVueForClient.setNewModelMenu();
+                        mainVueForClient.setVisible(true);
+                    }
+                    else
+                    {
+                        MainPage m = new MainPage("test", restaurant.getListDePlat(), restaurant.getMenu(), restaurant.getListReservation());
+                        mainvue = m;
+                        mainvue.setControlleur(this);
+                        mainvue.setNewModelReservation();
+                        mainvue.setNewModelMenu();
+                        mainvue.setNewModelPlat();
+                        mainvue.setVisible(true);
+                    }
                 }
                 else
                 {
@@ -265,30 +275,44 @@ public class Controlleur implements ActionListener, WindowListener {
             if(e.getActionCommand().equals("SUPPRIMER DU MENU"))
             {
 
+                restaurant.SupprimerUnPlatDuMenu(restaurant.getMenu().getListPlats().get(mainvue.getJTMenu().getSelectedRow()));
+
+                mainvue.setNewModelMenu();
+
             }
 
             if(e.getActionCommand().equals("SUPPRIMER UN PLAT"))
             {
+                restaurant.SupprimerPlat(restaurant.getListDePlat().get(mainvue.getJTPlat().getSelectedRow()));
 
+                mainvue.setNewModelPlat();
             }
 
             if(e.getActionCommand().equals("SUPPRIMER"))
             {
-
+                System.out.println("SUPPR RESERVATION");
+                restaurant.SuprimerUneReservation(restaurant.getListReservation().get(mainvue.getJTReservation().getSelectedRow()));
+                restaurant.DeleteReservationFromMap(restaurant.getListReservation().get(mainvue.getJTReservation().getSelectedRow()));
+                mainvue.setNewModelReservation();
             }
-
-            if(e.getSource() == mainVueForClient.getCBMois() || e.getSource() == mainVueForClient.getCBANNEE() || mainvue.getCBMois() == e.getSource() || e.getSource() == mainvue.getCBANNEE())
-            {
+            if(restaurant.getPersonneConnecte() != null) {
                 if (restaurant.getPersonneConnecte().getType().equals("C"))
-                    mainVueForClient.ChangeNbJour();
+                {
+                    if (e.getSource() == mainVueForClient.getCBMois() || e.getSource() == mainVueForClient.getCBANNEE()) {
+                        mainVueForClient.ChangeNbJour();
+                    }
+                }
                 else
-                    mainvue.ChangeNbJour();
-
+                {
+                    if (e.getSource() == mainvue.getCBMois() || e.getSource() == mainvue.getCBANNEE()) {
+                        mainvue.ChangeNbJour();
+                    }
+                }
             }
 
             if(e.getActionCommand().equals("RECHERCHER"))
             {
-                if(restaurant.getPersonneConnecte().getType() == "C")
+                if(restaurant.getPersonneConnecte().getType().equals("C"))
                 {
                     ArrayList<Resevation> List = restaurant.ReservationAAfficher((int) mainVueForClient.getCBJOUR().getSelectedItem(),
                             (int) mainVueForClient.getCBMois().getSelectedItem(), (int) mainVueForClient.getCBANNEE().getSelectedItem());

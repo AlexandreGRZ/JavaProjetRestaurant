@@ -3,16 +3,23 @@ import InterfaceGraphique.InterfaceUtilisateur;
 import InterfaceGraphique.MainPage;
 import MODEL.*;
 
+import java.beans.Beans;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+import java.beans.*;
 
 public class Main {
 
 
+
     public static void main(String[] args) {
+        LogOnTheSite connexion;
         Restaurant Restaurant = MODEL.Restaurant.getInstance();
         //PREREQUIS POUR L'APPLICATION ---------------------------------------------------------------------------------
+
+
 
         Restaurant.LoadAliment();
         Restaurant.LoadPlat();
@@ -20,6 +27,7 @@ public class Main {
         Restaurant.LoadClient();
         Restaurant.LoadMapReservation();
         Restaurant.LoadReservation();
+
 
         System.out.println(Restaurant.getListPersonne());
 
@@ -48,6 +56,21 @@ public class Main {
         {
             System.out.println(Restaurant.getListPersonne().get(i).toString() + " ");
 
+        }
+
+        try{
+            connexion = (LogOnTheSite) Beans.instantiate(null, "MODEL.LogOnTheSite");
+            connexion.setSingleton(Restaurant);
+            Restaurant.setConnexion(connexion);
+        }catch (ClassNotFoundException e)
+        {
+            System.out.println("Classe non trouvée : " + e.getMessage());
+            System.exit(0);
+        }
+        catch(IOException e)
+        {
+            System.out.println("Erreur IO : " + e.getMessage());
+            System.exit(0);
         }
 
        //CREATION DES FENETRE GRAPHIQUE----------------------------------------------------------------------------------

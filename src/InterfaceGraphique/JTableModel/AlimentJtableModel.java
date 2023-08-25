@@ -62,7 +62,7 @@ public class AlimentJtableModel extends AbstractTableModel {
                     case 0:
                         this.setValueAt(value.getNumAliment(),i, j);
                     case 1:
-                        this.setValueAt(value.getNumAliment(),i, j);
+                        this.setValueAt(value.getNom(),i, j);
                 }
             }
         }

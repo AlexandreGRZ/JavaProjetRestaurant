@@ -7,6 +7,8 @@ import java.io.*;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
+
+
 import org.apache.commons.lang3.*;
 
 
@@ -14,7 +16,7 @@ public class Restaurant {
 
 
     ArrayList<Resevation> ListReservation = new ArrayList<Resevation>();
-
+    LogOnTheSite connexion = null;
     ArrayList<Resevation> ListReservationAfficher = new ArrayList<Resevation>();
     Menu Menu = new Menu(1, new ArrayList<Plat>(), new ArrayList<Boisson>());
     ArrayList<Plat> ListDePlat = new ArrayList<Plat>();
@@ -28,11 +30,11 @@ public class Restaurant {
 
     Map<String, ArrayList<Table>> MapReservation = new HashMap<>();
 
+
     private static Restaurant r1;
 
     private Restaurant()
     {
-
     }
     private Personne PersonneConnecte = null;
     public static Restaurant getInstance()
@@ -67,6 +69,7 @@ public class Restaurant {
     public void SuprimerUneReservation(Resevation r1)
     {
         getListReservation().remove(r1);
+        getListReservationAfficher().remove(r1);
     }
 
     public ArrayList<Aliment> getListAliment() {
@@ -111,6 +114,10 @@ public class Restaurant {
 
     public void setListDePlat(ArrayList<Plat> listDePlat) {
             ListDePlat = listDePlat;
+    }
+
+    public void setConnexion(LogOnTheSite connexion) {
+        this.connexion = connexion;
     }
 
     public void setListAliment(ArrayList<Aliment> listAliment) {
@@ -163,7 +170,7 @@ public class Restaurant {
 
     public void LoadAliment()
     {
-        try(CSVReader reader = new CSVReader(new FileReader("E:\\Cours\\Java\\JavaProjetRestaurant\\CSV\\Aliment.csv")))
+        try(CSVReader reader = new CSVReader(new FileReader("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/CSV/Aliment.csv")))
         {
             reader.readNext();
 
@@ -195,33 +202,33 @@ public class Restaurant {
 
     public void SavePlat(ArrayList<Plat> data)
     {
-        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Plat");
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/Plat.dat");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
             for (Plat p: data) {
                 objectOutputStream.writeObject(p);
             }
         }catch (IOException e) {
-            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier plAT : " + e.getMessage());
         }
 
     }
 
     public void SaveMenu(Menu menu)
     {
-        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Menu");
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/Menu.dat");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
             objectOutputStream.writeObject(menu);
         }catch (IOException e) {
-            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier MENU : " + e.getMessage());
         }
 
     }
 
     public void SaveClient(ArrayList<Personne> data)
     {
-        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Client");
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/Client.dat");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
             for (Personne value: data) {
@@ -229,26 +236,26 @@ public class Restaurant {
                 objectOutputStream.writeObject(value);
             }
         }catch (IOException e) {
-            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier CLIENT : " + e.getMessage());
         }
 
     }
 
     public void SaveMapReservation()
     {
-        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\MapReservation");
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/MapReservation.dat");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
             objectOutputStream.writeObject(MapReservation);
         }catch (IOException e) {
-            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier RESERVATION: " + e.getMessage());
         }
 
     }
 
     public void SaveReservation(ArrayList<Resevation> data)
     {
-        try(FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Reservation");
+        try(FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/Reservation.dat");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer))
         {
             for (Resevation value: data) {
@@ -256,13 +263,13 @@ public class Restaurant {
                 objectOutputStream.writeObject(value);
             }
         }catch (IOException e) {
-            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de l'écriture dans le fichier RESERVATION : " + e.getMessage());
         }
 
     }
     public void LoadPlat()
     {
-        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Plat");
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/Plat.dat");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
             Plat p = (Plat) objectInputStream.readObject();
@@ -274,13 +281,13 @@ public class Restaurant {
         }
         catch (IOException | ClassNotFoundException e)
         {
-            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier PLAT : " + e.getMessage());
         }
     }
 
     public void LoadMapReservation()
     {
-        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\MapReservation");
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/MapReservation.dat");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
             Map<String, ArrayList<Table>> t = (Map<String, ArrayList<Table>>) objectInputStream.readObject();
@@ -291,12 +298,12 @@ public class Restaurant {
         }
         catch (IOException | ClassNotFoundException e)
         {
-            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier MAPRESERVATION : " + e.getMessage());
         }
     }
     public void LoadClient()
     {
-        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Client");
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/Client.dat");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
             Personne c = (Personne) objectInputStream.readObject();
@@ -309,13 +316,13 @@ public class Restaurant {
         }
         catch (IOException | ClassNotFoundException e)
         {
-            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier  CLIENT: " + e.getMessage());
         }
     }
 
     public void LoadReservation()
     {
-        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Reservation");
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/Reservation.dat");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
             Resevation c = (Resevation) objectInputStream.readObject();
@@ -328,13 +335,13 @@ public class Restaurant {
         }
         catch (IOException | ClassNotFoundException e)
         {
-            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier RESEVRATION: " + e.getMessage());
         }
     }
 
     public void LoadMenu()
     {
-        try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\Menu");
+        try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/Menu.dat");
             ObjectInputStream objectInputStream = new ObjectInputStream(reader))
         {
             Menu m = (Menu) objectInputStream.readObject();
@@ -342,7 +349,7 @@ public class Restaurant {
         }
         catch (IOException | ClassNotFoundException e)
         {
-            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier : " + e.getMessage());
+            System.out.println("Une erreur s'est produite lors de la lecture dans le fichier  MENU : " + e.getMessage());
         }
     }
 
@@ -387,73 +394,23 @@ public class Restaurant {
         }
     }
 
-    public int Connexion(String login, String mdp)
-    {
-        System.out.println(login + mdp);
-        boolean CheckIfLoginExist = false;
-        Personne client = null;
-        for (Personne value : getListPersonne()) {
-            System.out.println(value.getLogin() + getmdp(value.getLogin()));
-            if(value.getLogin().equals(login))
-            {
-                CheckIfLoginExist = true;
-                client = value;
-                break;
-            }
-        }
 
-        if(CheckIfLoginExist)
-        {
-            System.out.println(mdp);
-            if(this.getmdp(login).equals(mdp))
-            {
-                setPersonneConnecte(client);
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        else
-        {
-            return 0;
-        }
-    }
 
-    public String getmdp(String login)
-    {
-        try{
 
-            Properties p = new Properties();
-
-            p.load(new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties"));
-
-            String mdp = p.getProperty(login);
-            return mdp;
-
-        }catch (FileNotFoundException e)
-        {
-            System.out.println("File not find");
-        } catch (IOException e) {
-            System.out.println("PROBLEME IOException");
-        }
-        return null;
-    }
     public void setmdp(String Login, String mdp)
     {
 
-        File F = new File("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties");
+        File F = new File("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties");
 
         if(F.exists())
         {
-            try(FileInputStream reader = new FileInputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties"))
+            try(FileInputStream reader = new FileInputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"))
             {
                 Properties p = new Properties();
                 p.load(reader);
                 p.setProperty(Login, mdp);
 
-                try( FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties"))
+                try( FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/data/mdp.properties"))
                 {
                     p.store(writer, null);
                 }
@@ -471,7 +428,7 @@ public class Restaurant {
             Properties p = new Properties();
             p.setProperty(Login, mdp);
 
-            try( FileOutputStream writer = new FileOutputStream("E:\\Cours\\Java\\JavaProjetRestaurant\\data\\mdp.properties"))
+            try( FileOutputStream writer = new FileOutputStream("/Users/alexandregrzegorczyk/COURS/BAC2/Q2/JAVA/JavaProjetRestaurant/src/data/mdp.properties"))
             {
                 p.store(writer, null);
             }
@@ -507,6 +464,13 @@ public class Restaurant {
         else
             return null;
 
+    }
+
+    public void DeleteReservationFromMap(Resevation r)
+    {
+        Map<String, ArrayList<Table>> reservations = getMapReservation();
+
+        reservations.get(r.getDatereservation().toString()).remove(r.getTable());
     }
 
 
@@ -562,7 +526,7 @@ public class Restaurant {
 
     }
 
-
-
-
+    public LogOnTheSite getConnexion() {
+        return connexion;
+    }
 }

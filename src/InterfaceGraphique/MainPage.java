@@ -66,6 +66,7 @@ public class MainPage extends JFrame  {
         AJOUTERPLATButton.addActionListener(C);
         CREEPLATButton.addActionListener(C);
         SUPPRIMERDUMENUButton.addActionListener(C);
+        SUPPRIMERButton1.addActionListener(C);
         SUPPRIMERUNPLATButton.addActionListener(C);
         RESERVERButton.addActionListener(C);
         RECHERCHERButton.addActionListener(C);
@@ -107,6 +108,18 @@ public class MainPage extends JFrame  {
 
     public JComboBox getCBANNEE() {
         return CBANNEE;
+    }
+
+    public JTable getJTMenu() {
+        return JTMenu;
+    }
+
+    public JTable getJTPlat() {
+        return JTPlat;
+    }
+
+    public JTable getJTReservation() {
+        return JTReservation;
     }
 
     public void AfficherLesElementCBox() {

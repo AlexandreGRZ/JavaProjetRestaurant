@@ -48,9 +48,7 @@ public class PlatJtableModel extends AbstractTableModel {
     }
 
     @Override
-    public String getColumnName(int column) {
-        return columnNames[column];
-    }
+    public String getColumnName(int column) { return columnNames[column]; }
 
     public void AfficherElement()
     {
