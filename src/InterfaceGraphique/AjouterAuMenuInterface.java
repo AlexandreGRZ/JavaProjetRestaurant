@@ -33,6 +33,7 @@ public class AjouterAuMenuInterface extends JFrame{
         this.pack();
     }
 
+
     public void setControlleur(Controlleur C)
     {
         AJOUTERAUMENUButton.addActionListener(C);
